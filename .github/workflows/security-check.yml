@@ -1,0 +1,17 @@
+name: Security check
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Scan tracked files
+        run: python "Unity Opus 5.5 Minecraft/Tools/check_secrets.py"

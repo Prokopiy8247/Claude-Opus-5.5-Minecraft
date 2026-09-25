@@ -1,0 +1,1 @@
+{"name":"shield","texW":64,"texH":64,"rig":"Static","scale":1,"bones":[{"name":"plate","parent":null,"pivot":[0,0,0],"rot":[0,0,0],"cubes":[{"o":[-6,-11,-1],"s":[12,22,1],"uv":[0,0],"inf":0,"mir":false}]},{"name":"handle","parent":"plate","pivot":[0,0,0],"rot":[0,0,0],"cubes":[{"o":[-1,-3,-7],"s":[2,6,6],"uv":[26,0],"inf":0,"mir":false}]}]}
