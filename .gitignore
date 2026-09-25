@@ -1,0 +1,39 @@
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.vs/
+
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.pfx
+*.p8
+*.jks
+*.keystore
+*.mobileprovision
+*.cer
+*.key
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+**/export_credentials.cfg
+**/credentials.*
+**/secrets.*
+
+# Local AI/session metadata
+**/.opus55-run/
+**/.claude/
+
+# Godot caches and builds
+**/.godot/
+**/.mono/
+**/builds/
+**/GodotMinecraft.exe
+**/GodotMinecraft.pck
+

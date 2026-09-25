@@ -1,0 +1,11 @@
+GODOT MINECRAFT — WINDOWS
+=========================
+
+1. Полностью распакуйте ZIP-архив.
+2. Запустите GodotMinecraft.exe.
+3. В меню выберите Singleplayer -> Create New World -> Create.
+
+Не запускайте EXE прямо из окна архиватора.
+Подробная инструкция и управление:
+https://github.com/Prokopiy8247/Claude-Opus-5.5-Minecraft
+
