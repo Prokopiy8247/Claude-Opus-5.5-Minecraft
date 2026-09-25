@@ -4,19 +4,42 @@ Thumbs.db
 Desktop.ini
 .idea/
 .vscode/
+.vs/
 
 # Local configuration and credentials
 .env
 .env.*
 !.env.example
-*.key
 *.pem
 *.p12
 *.pfx
+*.p8
 *.jks
 *.keystore
+*.mobileprovision
+*.cer
+*.key
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
 credentials.json
 service-account*.json
+**/export_credentials.cfg
+**/credentials.*
+**/secrets.*
+
+# Local AI/session metadata
+**/.opus55-run/
+**/.opus-5.5-run/
+**/.claude/
+
+# Godot caches and builds
+**/.godot/
+**/.mono/
+**/builds/
+**/GodotMinecraft.exe
+**/GodotMinecraft.pck
 
 # Locally prepared GitHub release files
 /Release Assets/

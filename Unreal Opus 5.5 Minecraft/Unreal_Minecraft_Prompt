@@ -1,0 +1,2633 @@
+## Mission
+
+You are the sole lead developer of this Unreal Engine project.
+
+Your task is to build the closest practical **single-player recreation of modern Minecraft: Java Edition** that can be achieved inside this project during this autonomous coding session.
+
+This is not a tiny voxel-tech-demo task and not an MVP-only task. The goal is to recreate as much of the recognizable Minecraft experience as possible: world generation, visuals, controls, Creative, Survival, inventories, crafting, mobs, combat, portals, the Nether, the End, bosses, structures, redstone-like systems, progression, and modern content.
+
+The project will be shown in a YouTube video comparing how well GPT-6 Astra can recreate Minecraft in several game engines. Therefore:
+
+- visible fidelity matters;
+- breadth of working gameplay matters;
+- the first-launch experience matters;
+- funny/broken placeholders are worse than fewer systems that genuinely work;
+- after the stable core works, keep adding content instead of stopping at a minimal milestone.
+
+I am a complete Unreal beginner. Do not expect me to manually configure levels, Blueprints, materials, Data Assets, UI widgets, input mappings, lighting, collision, physics settings, or Editor properties for you. **Automate everything that can reasonably be automated.**
+
+Do not merely write instructions for me. Modify the actual project and leave it ready to open and play.
+
+
+## Mandatory Blender MCP integration — Unreal high-fidelity art direction
+
+Blender is a **mandatory active 3D asset-production tool for this benchmark**.
+
+The dedicated Blender connection for this Unreal Engine project is:
+
+```text
+MCP server: blender_unreal
+Blender port: 9878
+Master Blender file: UnrealMinecraft.blend
+```
+
+Use **only** `blender_unreal` for this project. Do not use `blender_unity` or `blender_godot`.
+
+If any later section says Blender is optional, may only be used for selected assets, or suggests that in-engine primitive generation should replace Blender for important authored models, **this section takes precedence**.
+
+### Unreal visual priority — important
+
+Unlike the Unity and Godot versions, this Unreal version intentionally uses the **high-fidelity realistic / stylized-realistic UE5 reinterpretation** already described later in this prompt.
+
+For Blender-authored assets, the Unreal-specific realistic art direction takes priority over any generic/classic Minecraft block-model wording elsewhere in the prompt when the two conflict.
+
+Therefore:
+
+- the voxel/block structure of the world remains recognizable;
+- Minecraft identities, silhouettes and gameplay roles remain recognizable;
+- but mobs should be detailed authored 3D creatures/characters rather than vanilla cuboid replicas;
+- tools and weapons should be proper high-quality 3D props;
+- functional objects should receive authored geometry/material detail where it improves presentation;
+- bosses such as Ender Dragon and Wither should be showcase-quality assets for this benchmark;
+- materials should support the richer PBR Unreal visual direction;
+- the final impression should remain the prompt's target: a modern Unreal Engine 5 / realistic-RTX-like reinterpretation of Minecraft.
+
+Do not turn this Unreal version back into the same blocky mob/item art used by Unity/Godot.
+
+Continue to obey the intellectual-property rule in the original prompt: create assets from scratch and do not extract/copy proprietary Minecraft meshes, textures, sounds or other shipped game files.
+
+### What should use Blender
+
+Use Blender MCP actively for important authored 3D content, including where relevant:
+
+- player/character model;
+- passive and hostile mobs;
+- mob variants;
+- Ender Dragon;
+- Wither;
+- tools and weapons;
+- bows/crossbows;
+- shields;
+- tridents/spears;
+- armor visuals;
+- boats;
+- minecarts;
+- chests and other functional props;
+- crafting/furnace/enchanting/brewing-related authored props where richer geometry helps;
+- torches, lanterns and campfires;
+- End crystals and boss-related props;
+- Nether/End authored props;
+- held-item models;
+- other major hero assets that would otherwise remain Unreal primitives or weak placeholders.
+
+Voxel terrain must still use the efficient chunk/world architecture required elsewhere in this prompt. Do **not** turn the entire voxel terrain into individually imported Blender meshes. Blender is for authored asset quality; the runtime block world still needs efficient procedural/chunk rendering.
+
+### Required Blender workflow
+
+For every important Blender-authored asset:
+
+1. use `blender_unreal` to inspect/create/edit the model;
+2. keep the work inside or saved back into `UnrealMinecraft.blend`;
+3. use meaningful object/collection names;
+4. set correct Unreal-compatible scale, orientation, transforms and origins;
+5. build clean material slots and UVs where needed;
+6. rig/articulate assets where animation requires it;
+7. visually inspect the model in Blender and revise obvious quality/proportion problems;
+8. save the `.blend`;
+9. export **FBX** for skeletal/animated assets and FBX/GLB as appropriate for static assets;
+10. automatically import the result into the Unreal project using Unreal Editor Python/C++/editor automation where practical;
+11. configure StaticMesh/SkeletalMesh settings, Materials/Material Instances, collision/Physics Assets, animation assets/Blueprints and gameplay integration;
+12. verify the final imported asset in the actual Unreal scene/game.
+
+A Blender asset is **not complete merely because it exists in Blender**. It must be integrated, rendered correctly and usable in the running Unreal project.
+
+### Modeling quality for Unreal
+
+For important showcase assets:
+
+- avoid default primitive-looking geometry;
+- avoid visibly unfinished/generated topology when it harms appearance;
+- use enough geometric detail to support the realistic/stylized-realistic presentation;
+- keep topology and material complexity sensible for real-time use;
+- create articulation/rigging appropriate to the gameplay behavior;
+- use LOD/Nanite/static-vs-skeletal decisions pragmatically after import;
+- prioritize visible quality for Pig/Cow/Sheep/Chicken, Zombie/Skeleton/Creeper/Enderman, Ghast/Blaze/Piglin, Wither and especially Ender Dragon.
+
+### Safe Mode / automation
+
+The Blender MCP may be running in Safe Mode. Work within the tools that are available:
+
+- prefer direct structured MCP operations;
+- use Blender-native save/export operations;
+- adapt the workflow instead of abandoning Blender;
+- do not ask me to disable Safe Mode merely for convenience.
+
+Only report Safe Mode as a blocker if a genuinely necessary Blender operation cannot be completed by any allowed MCP/native workflow.
+
+Do not ask me to manually model, rig, export, import or assemble these assets when Blender MCP and Unreal automation can do it.
+
+
+---
+
+# 0. Reference target and scope
+
+## Target Minecraft version
+
+Use **Minecraft: Java Edition 26.2** as the gameplay/content reference target.
+
+Reference date for this benchmark: **2026-09-12**.
+
+Minecraft Java 26.2 is the current stable target for this task. Do **not** treat 26.3 release-candidate / unreleased Wilderness Bound content as required baseline content.
+
+The recreation should feel primarily like Java Edition.
+
+
+## Unreal implementation target
+
+Use the **existing Unreal project in the currently opened folder**.
+
+Engine requirements:
+
+- Unreal Engine **5.8** is the preferred/reference version for this benchmark. If the installed project/executable is a later compatible stable UE5 build, detect and use the actual installed stable version rather than downgrading it.
+- **C++** project.
+- Windows desktop target.
+- Single-player.
+- First-person 3D.
+- Use Unreal-native systems and reproducible project-owned automation wherever practical.
+- Assume the project was created as a **Blank C++** project unless the project itself indicates otherwise.
+
+Do not replace the existing project with a new nested project. Work directly in the current folder containing the `.uproject`.
+
+Do not require third-party paid plugins or paid asset packs.
+
+Prefer standard Unreal APIs and project-owned code over external marketplace content. If an additional built-in plugin is genuinely useful (for example Python Editor Script Plugin, Editor Scripting Utilities, Niagara-related built-ins, Geometry Script, Modeling tools, Procedural Content Generation, or similar), you may enable/configure it if it materially helps and can be justified in the project.
+
+
+## Intellectual-property / asset rule
+
+Recreate Minecraft's **gameplay systems, proportions, interaction model, progression structure, UI concepts, block-world feel, and recognizable feature behavior** as closely as practical, but:
+
+- do not copy or decompile Mojang/Microsoft source code;
+- do not extract or redistribute original Minecraft texture files;
+- do not copy original sound files, music, fonts, logos, title art, or other shipped game assets;
+- do not download ripped asset packs;
+- create the implementation from scratch;
+- create original procedural/generated pixel textures, sounds, icons, and blocky models that are visually close in *format and feel* without copying source assets pixel-for-pixel.
+
+A 16×16-ish pixel-art texture style, cubic/blocky mobs, Minecraft-like UI layout and proportions, and recognizable mechanics are desired.
+
+---
+
+# 1. Autonomy rules
+
+You own the implementation.
+
+Before coding:
+0. Locate the project's `.uproject` file and treat that directory as the project root.
+
+1. Inspect the entire project.
+2. Read the `.uproject` file and detect the exact Unreal Engine version and project modules.
+3. Inspect project plugins, project settings, and rendering configuration (Lumen, shadowing, Nanite, Niagara, Python, Editor scripting, etc.).
+4. Check whether this is already a Git repository.
+5. If Git is available and the repository is not initialized:
+   - create an Unreal-appropriate `.gitignore` (ignore `Binaries/`, `DerivedDataCache/`, `Intermediate/`, `Saved/`, build outputs, and other generated files while keeping source/config/content that belongs in the project);
+   - initialize Git;
+   - create a baseline commit before major modifications.
+6. Create `DEVELOPMENT.md` and `FEATURE_MATRIX.md`.
+7. Record the session start timestamp as described in the Metrics section at the end of this prompt.
+
+Then work autonomously.
+
+### Do not pause between phases
+
+Do not ask me for confirmation after every milestone.
+
+Continue from phase to phase automatically until:
+- the requested scope is implemented as far as practical;
+- you hit a genuine tool/permission/environment blocker;
+- or the coding session is ending.
+
+If one feature is difficult, do not get stuck indefinitely. Preserve the working game, document the issue, move to the next high-value feature, and return later if possible.
+
+### Do not offload Unreal work to me
+
+Prefer:
+- C++ gameplay systems, runtime bootstrap code, and project-owned automation;
+- Unreal Editor Python scripts, editor utility tooling, and reproducible automation;
+- asset-generation scripts;
+- automatic level/content generation where useful;
+- automatic asset/material/Blueprint setup where useful;
+- code-driven configuration.
+
+Avoid instructions like:
+> "Create this Actor/Blueprint/material manually and wire references in the Unreal Editor."
+
+If a level/asset/material/Blueprint setup can be generated by C++, Unreal Editor Python, or editor automation, generate it.
+
+---
+
+# 2. Completion philosophy
+
+This is a **breadth + fidelity benchmark**, not a minimal prototype.
+
+Use this priority order:
+
+1. Stable playable voxel core.
+2. Creative mode that is excellent for rapidly demonstrating the project.
+3. Survival mode with authentic progression.
+4. Overworld quality and recognizable Minecraft systems.
+5. Functional Nether portal + substantial Nether.
+6. Functional End progression + substantial End + Ender Dragon.
+7. Broad mob coverage.
+8. Broad crafting/item/block coverage.
+9. Structures, redstone, farming, enchanting, brewing, vehicles and other systems.
+10. Modern Minecraft 26.2-era content and visual polish.
+
+**Do not stop after item 1 or 2.** Keep implementing the later priorities while the project remains stable.
+
+When forced to choose, a feature that visibly works in a YouTube recording is more valuable than an invisible internal edge case.
+
+Do not implement menu entries or fake items that claim to work but are completely nonfunctional. Decorative blocks can be decorative; interactive/survival-critical items should have real behavior.
+
+---
+
+# 3. Core technical architecture
+
+Build a modular, data-driven system.
+
+Suggested high-level folders:
+
+```text
+Source/
+  AstraMinecraftUnreal/
+    World/
+    Voxels/
+    Biomes/
+    Dimensions/
+    Structures/
+    Player/
+    Blocks/
+    Items/
+    Inventory/
+    Crafting/
+    Entities/
+    Mobs/
+    AI/
+    Combat/
+    Farming/
+    Redstone/
+    Portals/
+    UI/
+    Audio/
+    SaveSystem/
+    Debug/
+    Generated/
+    Editor/
+    Tests/
+
+Content/
+  AstraMinecraft/
+    World/
+    Materials/
+    Meshes/
+    Textures/
+    Mobs/
+    Items/
+    UI/
+    VFX/
+    Audio/
+    Data/
+    Generated/
+    Maps/
+```
+
+Unreal implementation guidance:
+
+- Use **Unreal Engine 5.8** (or the detected installed compatible stable UE5 version if slightly newer) with a **C++ project**.
+- Prefer **C++ for runtime gameplay systems**.
+- Prefer **Unreal Editor Python** and **Editor Scripting Utilities** for deterministic editor/content automation.
+- Use Blueprint assets only when they materially help integration or usability, but do not make the project depend on me manually constructing Blueprint graphs from scratch.
+- If a Blueprint is needed, generate or configure it reproducibly via C++, Python, asset utilities, or editor automation where practical.
+- Organize code in clean C++ classes and keep content under a dedicated project folder in `/Game`.
+- Use Data Assets, Data Tables, and other data-driven approaches where appropriate for item/block/mob registries.
+- Use efficient generated chunk meshes or an equivalent voxel-world representation. Do not build the terrain as millions of individual Actors.
+- Use Niagara for high-value VFX where practical.
+- Use UE5 rendering features pragmatically: **Lumen**, **Virtual Shadow Maps**, atmospheric fog, and strong material work are encouraged.
+- Use Modeling/Geometry tools or Blender automation only when they materially improve content quality and do not introduce a manual workflow dependency.
+- Avoid massive per-block Actor/component counts, per-frame expensive ticking everywhere, or editor-only hacks that break packaged/runtime behavior.
+
+
+Use clean namespaces where practical.
+
+Create registries/data definitions for:
+- blocks;
+- items;
+- recipes;
+- mobs;
+- biomes;
+- structures;
+- dimensions;
+- loot tables;
+- status effects;
+- enchantments.
+
+Do not hardcode every variant into huge switch statements if a data-driven solution is practical.
+
+---
+
+# 4. Voxel world engine
+
+## Coordinate and block model
+
+Target:
+- 1 Unreal unit (1 cm) should map consistently to a practical Minecraft-like block scale. A common practical target is one block being roughly 100 Unreal units (1 meter), but choose the exact scale deliberately and keep it consistent.
+- axis-aligned cubic voxel grid;
+- player approximately Minecraft scale;
+- chunk footprint **16×16 blocks**;
+- use vertical chunk sections/subchunks if needed.
+
+Modern Minecraft Java uses a large vertical range. Attempt a world range comparable to **Y -64 through 320** if performance and implementation complexity allow. If a reduced range is required for stability, keep coordinate semantics and terrain proportions believable and document the difference.
+
+## Rendering
+
+Do NOT create one Actor/StaticMeshComponent per terrain block.
+
+Implement:
+- chunk mesh generation;
+- hidden-face culling;
+- texture atlas or texture-array based materials;
+- separate transparent/fluid geometry where useful;
+- neighbor-aware chunk updates;
+- chunk dirty/rebuild system;
+- mesh collision;
+- configurable render distance.
+
+Chunk meshing, async/background generation, pooling, ProceduralMesh/RuntimeMesh-style chunk generation, Geometry Script, or other efficient UE-native approaches are encouraged if practical, but do not destabilize the project merely for theoretical optimization.
+
+Target smooth gameplay at a useful recording distance on a normal gaming PC.
+
+## World generation
+
+The Overworld must be seed-based and deterministic.
+
+Generate:
+- large terrain variation;
+- plains;
+- hills;
+- mountains;
+- valleys;
+- coastlines;
+- oceans;
+- rivers where practical;
+- caves;
+- underground ore distribution;
+- underground lava;
+- water level;
+- trees and vegetation;
+- biome transitions.
+
+Prefer multi-noise/fractal noise rather than one simplistic height map.
+
+### Important Overworld biomes
+
+Implement as many as possible, with **visually distinct terrain and vegetation**, prioritizing:
+
+- Plains
+- Forest
+- Birch Forest
+- Dark Forest
+- Taiga
+- Snowy Taiga
+- Snowy Plains
+- Desert
+- Savanna
+- Jungle
+- Bamboo Jungle
+- Swamp
+- Mangrove Swamp
+- Badlands
+- Meadow
+- Windswept Hills / mountain terrain
+- Jagged/Frozen/Stony Peaks style mountains
+- Cherry Grove
+- Pale Garden
+- Beach / Stony Shore
+- River / Frozen River
+- Ocean
+- Warm Ocean
+- Cold/Frozen Ocean
+- Mushroom Fields
+- Lush Caves
+- Dripstone Caves
+- Deep Dark
+- Sulfur Caves
+
+After these, add additional biome variants if time permits.
+
+### Modern 26.2 content note
+
+Minecraft Java 26.2 includes the **Sulfur Caves** biome and **Sulfur Cube**. Sulfur Caves are an underground biome with sulfur/cinnabar bands, sulfur pools, potent sulfur, sulfur spikes and geyser-like behavior. Treat this as modern stretch content after the major vanilla progression is stable.
+
+---
+
+# 5. Blocks and materials
+
+Create a broad block registry and a coherent original pixel-art texture atlas.
+
+At minimum support the major Minecraft block families needed for gameplay:
+
+### Terrain / natural
+- grass block
+- dirt
+- coarse dirt
+- podzol
+- mud
+- stone
+- cobblestone
+- deepslate
+- cobbled deepslate
+- granite
+- diorite
+- andesite
+- tuff
+- calcite
+- sand
+- red sand
+- gravel
+- clay
+- snow
+- snow block
+- ice
+- packed ice
+- blue ice
+- bedrock
+- obsidian
+- crying obsidian
+
+### Ores / resources
+- coal ore
+- copper ore
+- iron ore
+- gold ore
+- redstone ore
+- lapis ore
+- diamond ore
+- emerald ore
+- deepslate variants where practical
+- raw resource blocks
+- coal block
+- iron block
+- copper block family
+- gold block
+- redstone block
+- lapis block
+- diamond block
+- emerald block
+
+### Wood families
+Support multiple wood types with logs, planks and useful variants:
+- oak
+- spruce
+- birch
+- jungle
+- acacia
+- dark oak
+- mangrove
+- cherry
+- pale oak
+- bamboo-style wood family where practical
+
+Include:
+- logs/stems;
+- stripped logs;
+- planks;
+- leaves;
+- saplings;
+- stairs;
+- slabs;
+- doors;
+- trapdoors;
+- fences;
+- fence gates;
+- buttons;
+- pressure plates;
+- signs if practical.
+
+### Functional blocks
+Implement actual interaction for as many as possible:
+- crafting table
+- furnace
+- blast furnace
+- smoker
+- chest
+- trapped chest
+- barrel
+- ender chest
+- shulker box
+- anvil
+- enchanting table
+- brewing stand
+- smithing table
+- stonecutter
+- loom
+- grindstone
+- composter
+- lectern
+- bookshelf
+- chiseled bookshelf
+- bed
+- torch
+- soul torch
+- lantern
+- campfire
+- ladder
+- scaffolding
+- glass
+- glass panes
+- TNT
+- jukebox as decorative/interactive if audio permits
+- spawner
+- beacon
+- respawn anchor
+
+### Modern copper family
+Current target-era content includes:
+- copper equipment tier;
+- copper chest;
+- copper golem;
+- copper decorative variants;
+- copper torch/lantern/bars/chains where practical;
+- shelf blocks;
+- oxidation/waxing as stretch behavior.
+
+### Nether blocks
+- netherrack
+- soul sand
+- soul soil
+- basalt
+- blackstone
+- magma
+- glowstone
+- Nether quartz ore
+- Nether gold ore
+- ancient debris
+- crimson nylium
+- warped nylium
+- crimson/warped stems and planks
+- Nether wart
+- shroomlight
+- vines/roots/fungi approximations
+- lava
+
+### End blocks
+- end stone
+- purpur
+- chorus plant/flower
+- obsidian pillars
+- end portal frame
+- end portal
+- end gateway
+- end crystal
+
+### 26.2 blocks as stretch
+- sulfur
+- potent sulfur
+- cinnabar
+- polished/brick variants
+- sulfur spikes
+
+Do not artificially cap the block catalog. Once the core families work, use generators/data definitions to add decorative variants efficiently.
+
+---
+
+# 6. First-person player controls
+
+
+Create the required input bindings using Unreal's input system in a reproducible way.
+
+Use clear mappings for actions/axes such as:
+- move forward / back
+- move right / left
+- look up / turn
+- jump
+- sprint
+- sneak
+- attack
+- use
+- inventory
+- drop item
+- swap hand
+- pick block
+- debug overlay
+- pause
+
+Do not require me to manually configure a large input setup by hand in project settings after your work is done.
+
+
+
+Match Minecraft keyboard/mouse behavior closely.
+
+Default controls:
+
+- Mouse — look
+- `WASD` — move
+- `Space` — jump
+- `Left Ctrl` — sprint
+- `Left Shift` — sneak / descend while flying
+- `Left Mouse` — attack / mine
+- `Right Mouse` — use / place / eat / interact
+- `1`–`9` — hotbar slots
+- Mouse wheel — hotbar selection
+- `E` — inventory
+- `Q` — drop selected item
+- `F` — swap main hand/offhand if offhand exists
+- Middle Mouse — pick block in Creative
+- Double-tap `Space` — toggle Creative flight
+- `Space` while flying — ascend
+- `Shift` while flying — descend
+- `Esc` — pause
+- `F3` — debug overlay
+- `F3 + F4` or a similarly reliable shortcut — game-mode switcher
+
+Implement:
+- walking;
+- sprinting;
+- jumping;
+- sneaking;
+- step-up behavior where reasonable;
+- gravity;
+- fall damage in Survival;
+- swimming;
+- underwater movement;
+- water surface behavior;
+- camera bob;
+- held-item bob/swing;
+- mining/attack hand animation;
+- collision with blocks;
+- head clearance;
+- no clipping through chunk borders.
+
+---
+
+# 7. Block interaction and mining
+
+Implement Minecraft-like targeting:
+
+- raycast from camera;
+- clear block outline/selection box;
+- reach distance similar to Minecraft;
+- adjacent-face placement;
+- prevent placing a solid block inside the player's collider;
+- correct placement across chunk boundaries.
+
+## Creative behavior
+- instant block breaking;
+- no drops required from creative destruction;
+- unlimited placement;
+- items do not get consumed;
+- tools do not lose durability.
+
+## Survival behavior
+Blocks have:
+- hardness;
+- preferred tool type;
+- minimum tool tier when relevant;
+- mining speed;
+- drop rules;
+- Silk Touch/Fortune hooks where implemented;
+- blast resistance;
+- transparency/solid/fluid flags.
+
+Mining should visibly progress with crack/progress feedback if feasible.
+
+Breaking or placing a boundary block must rebuild all affected chunks correctly.
+
+---
+
+# 8. Game modes — extremely important
+
+The project must include **Creative and Survival** as real separate modes.
+
+## Default mode: CREATIVE
+
+When a new/default benchmark world launches, the player should begin in **Creative mode**.
+
+Creative should behave as close as practical to Minecraft Java:
+
+- effectively unlimited resources;
+- invulnerability;
+- no hunger requirement;
+- instant block breaking;
+- free block/item placement;
+- unlimited item use;
+- flight;
+- double-space flight toggle;
+- hostile mobs do not target/attack the Creative player under ordinary conditions;
+- access to a searchable Creative inventory.
+
+### Creative inventory
+
+This is one of the most important features for the YouTube test.
+
+Pressing `E` in Creative should open a polished Minecraft-like Creative inventory with:
+
+- search field;
+- scrollable catalog;
+- category tabs;
+- item tooltips;
+- click/drag behavior sufficient for quick use;
+- hotbar integration;
+- stack creation;
+- destroy/clear-item action.
+
+Use categories similar to Java:
+- Building Blocks
+- Colored Blocks
+- Natural Blocks
+- Functional Blocks
+- Redstone Blocks
+- Tools & Utilities
+- Combat
+- Food & Drinks
+- Ingredients
+- Spawn Eggs / Mobs
+- Search
+- Survival Inventory
+
+### Any item
+
+The Creative inventory must allow the player to obtain **every implemented item/block** immediately.
+
+### Any mob
+
+Creative must provide a convenient way to spawn **every implemented mob**.
+
+Use spawn eggs or an equivalent dedicated Mob/Spawn tab.
+
+For this benchmark, go slightly beyond strict vanilla limitations if necessary: even bosses such as the Wither and Ender Dragon should have a direct test-spawn mechanism in Creative/debug UI so that I can rapidly demonstrate them on video.
+
+A separate searchable `All Mobs` panel is acceptable in addition to spawn eggs.
+
+## Survival mode
+
+Survival must not expose the Creative item/spawn catalog.
+
+Survival starts from normal resource constraints:
+- empty/basic inventory on a fresh survival start;
+- no flight;
+- no invulnerability;
+- finite items;
+- mining time;
+- tool requirements;
+- item durability;
+- health;
+- hunger;
+- drowning;
+- fall/fire/lava/starvation damage;
+- hostile mob aggression;
+- death and respawn;
+- resource gathering;
+- crafting progression;
+- XP;
+- armor;
+- food;
+- natural regeneration rules approximately matching Java.
+
+Default Survival difficulty: **Normal**.
+
+Add Peaceful/Easy/Normal/Hard if practical.
+
+### Survival HUD
+Show:
+- 10-heart style health bar / 20 health points;
+- hunger bar;
+- armor bar when relevant;
+- oxygen bubbles underwater;
+- XP bar and level;
+- 9-slot hotbar;
+- selected item count/durability where useful.
+
+Implement hunger/saturation behavior close enough to vanilla that:
+- movement/sprinting consumes exhaustion;
+- low hunger stops sprinting;
+- sufficient hunger allows natural health regeneration;
+- zero hunger causes starvation damage depending on difficulty.
+
+### Death and respawn
+- death screen;
+- inventory drops at death in Survival;
+- respawn at world spawn or last valid bed/respawn anchor;
+- dropped items persist long enough to recover;
+- Creative player normally cannot die except exceptional debug/void behavior.
+
+### Mode switching
+Provide a polished quick game-mode switcher for testing.
+`F3+F4` is preferred because it mirrors Java Edition.
+
+Switching to Survival must immediately remove Creative-only privileges/menu access.
+
+---
+
+# 9. Inventory and item system
+
+Implement a Minecraft-like inventory model:
+
+- 9-slot hotbar;
+- main inventory rows;
+- stack sizes;
+- drag/drop;
+- split stacks;
+- shift-click where practical;
+- item dropping;
+- pickups;
+- armor slots;
+- offhand;
+- container inventories.
+
+Survival inventory should include a **2×2 crafting grid**.
+
+Crafting table should provide a **3×3 crafting grid**.
+
+Add:
+- chests;
+- double-chest behavior if feasible;
+- furnaces;
+- storage containers;
+- item entities;
+- pickup delay;
+- stack merging where practical.
+
+---
+
+# 10. Crafting, smelting and progression
+
+Minecraft 26.2 has a very large recipe set. Do not try to hand-author every recipe one by one if a data-driven family/generator can create them.
+
+The goal is **as many real, useful recipes as practical**, not 10 showcase recipes.
+
+Implement:
+- shaped recipes;
+- shapeless recipes;
+- ingredient tags/families where useful;
+- output counts;
+- recipe lookup/book UI if practical.
+
+High-priority recipes include:
+
+### Basic progression
+- planks from logs
+- sticks
+- crafting table
+- chest
+- furnace
+- torches
+- bed
+- ladders
+- doors
+- fences
+- slabs/stairs
+- glass
+- buckets
+- flint and steel
+
+### Tool/equipment tiers
+Support:
+- wood
+- stone
+- copper
+- iron
+- gold
+- diamond
+- netherite
+
+For relevant tiers:
+- pickaxe
+- axe
+- shovel
+- hoe
+- sword
+- armor pieces
+
+Copper should sit between stone and iron in general equipment progression, reflecting modern Minecraft's Copper Age.
+
+### Combat/utility
+- bow
+- arrows
+- crossbow if practical
+- shield
+- shears
+- fishing rod if implemented
+- compass
+- clock
+- minecart
+- boat
+- TNT
+- ender chest
+- eye of ender
+- end crystal
+- beacon
+- fireworks for Elytra
+- spear
+
+### Stations
+Implement:
+- furnace smelting and fuel;
+- smoker/blast furnace as variants if practical;
+- smithing table for netherite upgrades;
+- anvil repair/rename basics;
+- brewing stand;
+- enchanting table.
+
+### Recipe book
+A searchable recipe book is desirable, especially in Survival.
+
+Continue adding recipe families after the high-priority progression is complete.
+
+---
+
+# 11. Tools, weapons, armor and combat
+
+## Tools
+Mining tool types:
+- pickaxe
+- axe
+- shovel
+- hoe
+- shears
+
+Support meaningful speed/tier differences.
+
+## Weapons
+Implement:
+- fists;
+- swords;
+- axes as weapons;
+- bow + arrows;
+- shield;
+- crossbow if practical;
+- trident if practical;
+- modern spear.
+
+### Modern spear
+Modern Minecraft includes a tiered spear weapon with:
+- Wood/Stone/Copper/Iron/Gold/Diamond variants;
+- Netherite upgrade;
+- normal jab-like attack;
+- charge/momentum-oriented attack;
+- extended reach characteristics;
+- Lunge enchantment as stretch behavior.
+
+## Armor
+Support:
+- leather;
+- copper;
+- gold;
+- iron;
+- diamond;
+- netherite.
+
+Add armor protection, durability and visible equipment on player/mobs where practical.
+
+## Combat feel
+Include:
+- damage cooldown / attack timing approximating Java;
+- knockback;
+- death animations/effects;
+- ranged projectiles;
+- shields blocking;
+- mob damage;
+- difficulty scaling;
+- critical-hit hooks if practical.
+
+---
+
+# 12. Food, health, status and survival systems
+
+Implement a useful food set:
+- apple
+- bread
+- raw/cooked beef
+- raw/cooked pork
+- raw/cooked chicken
+- raw/cooked mutton
+- fish
+- potato/baked potato
+- carrot
+- golden carrot
+- golden apple
+- berries or equivalent
+
+Food restores hunger and saturation.
+
+Implement:
+- health;
+- hunger;
+- saturation;
+- oxygen;
+- fire;
+- burning;
+- drowning;
+- lava;
+- fall damage;
+- poison;
+- regeneration;
+- resistance/speed/strength hooks for potions.
+
+---
+
+# 13. Farming and world interaction
+
+Add as many recognizable survival systems as practical:
+
+- farmland created with hoe;
+- wheat;
+- carrots;
+- potatoes;
+- sugar cane;
+- cactus;
+- pumpkins/melons if practical;
+- crop growth/random ticks;
+- bone meal;
+- sapling growth;
+- leaves decay;
+- animal breeding;
+- shearing sheep;
+- milking cows if buckets exist;
+- fishing as stretch.
+
+### Animal interactions
+Implement recognizable taming/breeding hooks when practical:
+- wolves + bones;
+- cats;
+- horses;
+- animals attracted/bred by appropriate foods.
+
+---
+
+# 14. Fluids
+
+Water and lava should be more than static colored cubes.
+
+Implement practical voxel-fluid behavior:
+- source blocks;
+- short-range flow/spread;
+- water swimming;
+- buoyancy feel;
+- drowning/oxygen;
+- lava damage;
+- lava ignition;
+- water extinguishes fire;
+- buckets can pick up/place source fluids.
+
+Stretch interactions:
+- water + lava -> cobblestone/stone/obsidian depending on conditions;
+- Nether water evaporation.
+
+Visuals:
+- transparent water;
+- animated or moving texture/UV if feasible;
+- underwater color/fog;
+- lava emissive material.
+
+---
+
+# 15. Day/night, weather and lighting
+
+Implement:
+- Minecraft-like day/night cycle;
+- square-ish sun and moon presentation using original textures;
+- sky color changes;
+- stars;
+- ambient light changes;
+- fog;
+- sunrise/sunset;
+- mob spawning response to darkness/time.
+
+Stretch:
+- rain;
+- snow;
+- thunderstorms;
+- lightning.
+
+Beds should:
+- set spawn in Overworld;
+- allow sleeping/skipping night when appropriate.
+
+Beds used in the Nether or End should behave dangerously/explosively, like Minecraft.
+
+---
+
+# 16. Mob system
+
+Use a reusable AI/entity framework with:
+- health;
+- movement;
+- pathing/steering;
+- gravity where applicable;
+- target selection;
+- aggression state;
+- attacks;
+- damage;
+- drops;
+- XP;
+- sounds/hooks;
+- spawn rules;
+- despawning rules where useful.
+
+Mobs must not all behave like the same capsule with different colors.
+
+Create **blocky articulated models** from generated meshes/primitives with recognizable silhouettes and simple animation:
+- idle;
+- walk;
+- attack;
+- hurt;
+- death;
+- special actions where relevant.
+
+Use original generated textures/materials.
+
+## Priority mob set — must work well
+
+### Passive / utility
+- Pig
+- Cow
+- Sheep
+- Chicken
+- Villager
+- Horse
+- Wolf
+- Iron Golem
+
+### Overworld hostile/neutral
+- Zombie
+- Skeleton
+- Creeper
+- Spider
+- Enderman
+- Slime
+- Witch
+- Drowned
+
+### Nether
+- Ghast
+- Blaze
+- Piglin
+- Zombified Piglin
+- Hoglin
+- Magma Cube
+- Wither Skeleton
+- Strider
+
+### End
+- Enderman
+- Shulker
+- Ender Dragon
+
+### Boss
+- Wither
+
+After this set works, continue broadening the roster.
+
+## Broad mob coverage — implement as many as practical
+
+Passive/utility/animal examples:
+- Allay
+- Armadillo
+- Axolotl
+- Bat
+- Camel
+- Cat
+- Cod
+- Dolphin
+- Donkey
+- Fox
+- Frog
+- Glow Squid
+- Goat
+- Happy Ghast
+- Ghastling
+- Llama
+- Mooshroom
+- Mule
+- Nautilus
+- Ocelot
+- Panda
+- Parrot
+- Polar Bear
+- Pufferfish
+- Rabbit
+- Salmon
+- Skeleton Horse
+- Sniffer
+- Snow Golem
+- Squid
+- Tadpole
+- Trader Llama
+- Tropical Fish
+- Turtle
+- Wandering Trader
+- Zombie Horse
+- Copper Golem
+- Sulfur Cube
+
+Additional hostile/neutral examples:
+- Bee
+- Bogged
+- Breeze
+- Cave Spider
+- Creaking
+- Elder Guardian
+- Endermite
+- Evoker
+- Guardian
+- Husk
+- Parched
+- Phantom
+- Piglin Brute
+- Pillager
+- Ravager
+- Silverfish
+- Stray
+- Vex
+- Vindicator
+- Warden
+- Zoglin
+- Zombie Villager
+- Zombie Nautilus
+- Camel Husk
+
+Implement important variants when economical:
+- warm/cold animal variants;
+- villager professions;
+- baby forms;
+- sheep colors;
+- frog variants;
+- horse variants;
+- zombie/skeleton regional variants.
+
+## Important individual behaviors
+
+Prioritize recognizable behavior rather than generic AI.
+
+Examples:
+
+### Creeper
+- approaches player;
+- hisses/charges;
+- explodes after fuse;
+- explosion damages mobs/player and terrain.
+
+### Skeleton
+- keeps useful distance;
+- shoots arrows.
+
+### Zombie
+- melee chase;
+- burns in sunlight when appropriate.
+
+### Spider
+- faster movement;
+- climbing approximation;
+- neutral/day vs hostile/dark behavior if practical.
+
+### Enderman
+- tall model;
+- neutral until provoked/looked at;
+- teleport;
+- water sensitivity;
+- can carry/move limited blocks as stretch.
+
+### Slime / Magma Cube
+- hopping movement;
+- splits into smaller versions.
+
+### Ghast
+- flying;
+- distant hostile targeting;
+- explosive fireballs that can be reflected if practical.
+
+### Blaze
+- floating;
+- ranged fire attacks;
+- blaze-rod drops.
+
+### Piglin
+- neutral rules;
+- becomes hostile under recognizable conditions;
+- gold-related behavior;
+- gold bartering as stretch.
+
+### Warden
+- extremely dangerous;
+- Deep Dark association;
+- sonic/ranged attack approximation;
+- blindness/dark ambience as stretch.
+
+### Creaking
+- Pale Garden association;
+- stops/moves based on whether the player is looking at it;
+- Creaking Heart-style dependency as stretch.
+
+### Happy Ghast
+- grown from Ghastling/Dried Ghast pipeline as stretch;
+- rideable flying mount;
+- harness.
+
+### Copper Golem
+- item-sorting behavior between copper chest and chests;
+- oxidation as stretch.
+
+### Sulfur Cube
+Current 26.2 behavior reference:
+- spawns in Sulfur Caves;
+- can absorb a held/nearby block;
+- absorbed block changes physical properties;
+- AI pauses while carrying absorbed block;
+- can be pushed;
+- shears can remove absorbed block;
+- smaller cubes can grow;
+- splits into smaller cubes when killed in normal state;
+- TNT absorption/explosive behavior is a stretch target.
+
+---
+
+# 17. Mob spawning
+
+Implement natural spawning rules per dimension/biome/light at useful approximation.
+
+In Survival:
+- passive mobs in suitable biomes;
+- hostile mobs primarily in darkness/night;
+- Nether/End dimension-specific mobs;
+- cap populations to protect performance.
+
+In Creative:
+- natural spawning may still exist;
+- hostile mobs should not normally target the Creative player;
+- any implemented mob must be spawnable instantly from Creative inventory/debug UI.
+
+---
+
+# 18. Loot and drops
+
+Use data-driven loot tables.
+
+Important examples:
+- animals -> relevant food/material drops;
+- sheep -> wool/mutton;
+- chickens -> feathers/chicken;
+- zombies -> rotten flesh;
+- skeletons -> bones/arrows;
+- creepers -> gunpowder;
+- spiders -> string;
+- endermen -> ender pearls;
+- blazes -> blaze rods;
+- ghasts -> ghast tears/gunpowder;
+- wither skeletons -> bones/coal and rare skull;
+- shulkers -> shulker shells;
+- Ender Dragon -> XP + progression event;
+- Wither -> Nether Star.
+
+Loot should connect to crafting/progression.
+
+---
+
+# 19. STRUCTURES — Overworld
+
+Generate structures procedurally or from code-created templates.
+
+High priority:
+- Village
+- Mineshaft
+- Stronghold with End portal room
+- Ruined Portal
+
+Then add as many as practical:
+- Desert Pyramid
+- Jungle Pyramid
+- Pillager Outpost
+- Woodland Mansion
+- Swamp Hut
+- Igloo
+- Shipwreck
+- Buried Treasure
+- Ocean Ruins
+- Ocean Monument
+- Ancient City
+- Trail Ruins
+- Trial Chambers
+
+Structures should have at least simplified believable loot/chests/mob relationships.
+
+### Villages
+Important features:
+- houses/paths/farms;
+- beds;
+- villagers;
+- simple professions;
+- basic trading UI as stretch;
+- Iron Golem presence.
+
+### Stronghold
+This is mandatory because Survival progression to the End must work.
+
+Include:
+- underground generated stronghold;
+- portal room;
+- End portal frame ring;
+- ability to activate the portal using Eyes of Ender.
+
+Eyes of Ender should provide a practical way of locating the nearest stronghold.
+
+---
+
+# 20. Nether portal — mandatory
+
+A Survival player must be able to build and use a Nether portal.
+
+Implement Minecraft-like portal rules:
+
+- obsidian rectangular frame;
+- minimum familiar portal shape roughly 4×5 outer dimensions / 2×3 opening;
+- corner blocks may be optional if practical;
+- activate using flint and steel/fire;
+- animated purple-ish portal surface using original material;
+- portal particles/ambient effect;
+- short portal dwell/transition;
+- teleport to Nether;
+- return to Overworld;
+- do not duplicate player or inventory;
+- world state persists in both dimensions.
+
+Use Minecraft-like horizontal coordinate scaling:
+- Overworld -> Nether: X/Z approximately divided by 8;
+- Nether -> Overworld: X/Z approximately multiplied by 8.
+
+Find or generate a safe destination portal if one does not already exist nearby.
+
+---
+
+# 21. THE NETHER — mandatory
+
+The Nether must feel like a real separate dimension, not a red room.
+
+Generate a persistent voxel world with:
+- large cavernous terrain;
+- bedrock-like floor/ceiling behavior;
+- lava oceans;
+- glowstone;
+- quartz;
+- Nether gold;
+- ancient debris;
+- biome fog/particles;
+- Nether structures;
+- Nether mob spawning.
+
+Implement the five major Nether biome identities:
+
+1. Nether Wastes
+2. Crimson Forest
+3. Warped Forest
+4. Soul Sand Valley
+5. Basalt Deltas
+
+### Nether structures
+Mandatory/high priority:
+- Nether Fortress
+- Blaze spawner area
+- Bastion Remnant
+
+Stretch:
+- ruined portals;
+- Nether fossils.
+
+### Nether gameplay
+Include:
+- piglins;
+- hoglins;
+- ghasts;
+- blazes;
+- wither skeletons;
+- magma cubes;
+- striders;
+- zombified piglins;
+- endermen where appropriate.
+
+Important behaviors:
+- water should not behave normally in the Nether;
+- beds explode;
+- respawn anchor can provide Nether respawn if implemented;
+- lava is common;
+- Netherite progression via ancient debris;
+- blaze rods enable Eyes of Ender/progression.
+
+---
+
+# 22. End progression and End portal — mandatory
+
+Survival progression should be possible:
+
+1. Obtain ender pearls.
+2. Obtain blaze powder.
+3. Craft Eyes of Ender.
+4. Use Eyes to locate a stronghold.
+5. Find the End portal room.
+6. Insert Eyes into portal frames.
+7. Activate the portal.
+8. Enter the End.
+
+Creative should also provide:
+- End Portal Frame;
+- Eye of Ender;
+- direct debug/teleport options for testing.
+
+The active End portal should be a 3×3 portal area inside the familiar frame structure.
+
+Entering teleports immediately to the End and creates/uses a safe obsidian arrival platform.
+
+---
+
+# 23. THE END — mandatory
+
+The End must contain:
+
+### Main island
+- void;
+- large End Stone central island;
+- Endermen;
+- obsidian pillars;
+- End Crystals;
+- central exit portal/fountain;
+- Ender Dragon boss.
+
+### Ender Dragon fight
+This is a headline YouTube feature. Make it visually and mechanically convincing.
+
+Implement:
+- boss health bar;
+- flying/orbiting behavior;
+- attacks/fireball or dragon-breath approximation;
+- periodic perching near central portal;
+- obsidian pillars;
+- End Crystals that heal the dragon;
+- destroying crystals matters;
+- death sequence/particles;
+- large XP reward or visible reward;
+- exit portal activates after victory.
+
+### After dragon defeat
+Implement:
+- return portal;
+- End Gateway;
+- access to outer islands.
+
+### Outer End
+Generate:
+- large/small floating End islands;
+- chorus plants;
+- End Cities;
+- Shulkers;
+- End Ships;
+- Elytra loot.
+
+### Elytra
+If practical:
+- equipable;
+- glide/fly physics;
+- fireworks boost.
+
+This gives the End a real post-boss purpose.
+
+---
+
+# 24. Wither progression
+
+Implement the Wither as the second boss.
+
+Player should be able to summon it through a Minecraft-like construction using:
+- soul sand/soil arrangement;
+- three wither skeleton skulls.
+
+Wither behavior:
+- boss bar;
+- flight;
+- ranged explosive attacks;
+- target mobs/player in Survival;
+- multi-phase/armor-like behavior if practical;
+- terrain damage;
+- drops Nether Star.
+
+Use Nether Star for a simplified functional Beacon system if time permits.
+
+Creative mob menu must also allow direct Wither spawn for video testing.
+
+---
+
+# 25. Redstone-like system
+
+Implement enough Minecraft redstone to demonstrate real circuits.
+
+Core:
+- redstone dust;
+- redstone block;
+- lever;
+- button;
+- pressure plate;
+- redstone torch;
+- redstone lamp;
+- repeater;
+- comparator if practical;
+- piston;
+- sticky piston;
+- observer if practical;
+- target block;
+- TNT ignition;
+- dispenser;
+- dropper;
+- hopper.
+
+Aim for:
+- power levels / propagation;
+- wires visually connect;
+- levers/buttons power nearby systems;
+- lamps turn on;
+- pistons push blocks within constraints;
+- TNT can be triggered;
+- repeater delays/signals.
+
+A small working lever -> redstone -> lamp setup should definitely be possible.
+
+---
+
+# 26. Explosions and TNT
+
+TNT must be satisfying.
+
+Implement:
+- placement;
+- flint-and-steel ignition;
+- redstone ignition;
+- visible fuse;
+- flashing/animation;
+- fuse sound;
+- particle explosion;
+- screen/camera feedback if tasteful;
+- radial entity damage;
+- knockback;
+- actual voxel terrain destruction based on blast strength;
+- chain reactions.
+
+Creeper and Ghast explosions should reuse the same robust explosion system with tuned strength.
+
+---
+
+# 27. Enchanting, XP, brewing and potions
+
+After major progression is working, add:
+
+## XP
+- mob XP drops;
+- XP orbs or direct equivalent;
+- player XP bar and levels.
+
+## Enchanting
+- enchanting table UI;
+- lapis cost;
+- level cost;
+- randomized useful enchantments.
+
+High-value enchantments:
+- Sharpness
+- Protection
+- Efficiency
+- Unbreaking
+- Fortune
+- Silk Touch
+- Power
+- Infinity
+- Mending if practical
+- Lunge for spear as modern stretch feature
+
+## Brewing
+- brewing stand UI;
+- blaze powder fuel;
+- water bottles;
+- Nether Wart -> awkward potion;
+- a useful subset:
+  - Healing
+  - Regeneration
+  - Strength
+  - Speed
+  - Fire Resistance
+  - Night Vision
+
+---
+
+# 28. Transportation
+
+Implement as much as practical:
+
+High priority:
+- boats;
+- minecarts + rails.
+
+Stretch:
+- powered rails;
+- chest minecart;
+- horse riding;
+- camel riding;
+- strider riding with appropriate control item;
+- Happy Ghast riding;
+- Elytra.
+
+Vehicles should not be decorative props if exposed as usable items.
+
+---
+
+# 29. Commands / admin/debug tools
+
+For YouTube testing, add a Minecraft-like command console or debug interface.
+
+Useful commands:
+- `/gamemode creative`
+- `/gamemode survival`
+- `/give <item> [count]`
+- `/summon <mob>`
+- `/time set day`
+- `/time set night`
+- `/weather clear`
+- `/tp`
+- `/locate structure`
+- `/locate biome`
+- `/kill`
+- `/difficulty`
+
+A dedicated debug/admin panel is also welcome, but it must not replace the Creative inventory.
+
+Creative/debug panel should allow:
+- change dimension;
+- teleport;
+- set time;
+- spawn every implemented mob;
+- give every implemented item;
+- toggle flight;
+- clear entities;
+- reload chunks;
+- show seed;
+- show XYZ;
+- show biome;
+- show chunk;
+- show FPS.
+
+The UI should make it fast for me to demonstrate features on camera.
+
+---
+
+# 30. Visual target
+
+
+## Unreal-specific art-direction rule — extremely important
+
+For this Unreal benchmark, the **mechanics and content** should stay close to Minecraft, but the **visual treatment** should intentionally be a **high-fidelity realistic / stylized-realistic reinterpretation**, not a direct reproduction of the classic pixel-art vanilla look.
+
+Target impression:
+
+**"What would Minecraft look like as a modern Unreal Engine 5 game?"**
+
+This means:
+
+- preserve the recognizable voxel/block world structure, dimensions, progression, and gameplay grammar;
+- preserve recognizable silhouettes and identities of mobs, items, tools, structures, and blocks;
+- but reinterpret them using **high-quality 3D assets, PBR materials, strong lighting, richer geometry, atmospheric effects, and cinematic presentation**.
+
+Examples:
+- terrain blocks are still block-based, but use richer material treatment;
+- mobs should be proper 3D creatures/characters, not simple cuboid Minecraft recreations;
+- tools and weapons should be proper 3D models;
+- torches, lava, portals, Nether and End should be visually impressive;
+- the final result should feel closer to "realistic/RTX Minecraft" or "a UE5 reimagining of Minecraft" than to vanilla Java pixel graphics.
+
+Do **not** simply make all terrain share the same generic brown material. Grass, dirt, stone, sand, ores, wood, Nether blocks, End blocks, etc. must belong to distinct material families.
+
+
+
+This should look immediately recognizable as a polished modern block-building sandbox and as close to Minecraft's visual grammar as practical without copying its shipped assets.
+
+## World look
+- original 16×16-ish pixel textures;
+- strong readable block faces;
+- grass top/side distinction;
+- ore patterns;
+- wood grain;
+- leaves with transparency/cutout;
+- animated water/lava approximation;
+- square sun/moon;
+- blue sky and fog;
+- Minecraft-like color palette;
+- biome tinting for grass/leaves/water if feasible.
+
+## Mobs
+Avoid primitive capsule placeholders in the final presentation.
+
+Use:
+- cube/rectangular body pieces;
+- blocky heads/limbs;
+- simple keyframe/procedural animations;
+- recognizable proportions;
+- original generated pixel materials.
+
+## First-person items
+Do not show all tools as flat icons.
+
+Blocks/tools/weapons held in the hand should have:
+- actual block mesh or simple 3D item/tool model;
+- sensible first-person position;
+- equip/bob;
+- swing/use animation.
+
+## UI
+Create an original but Minecraft-like pixel UI:
+- centered crosshair;
+- 9-slot hotbar;
+- selected slot frame;
+- inventory grid;
+- hearts/hunger/armor/XP in Survival;
+- clean Creative catalog.
+
+Do not use the official Minecraft logo or copied UI sprite sheets.
+
+---
+
+
+# 30A. Mandatory Asset Generation Pipeline
+
+You are responsible for creating the visual assets required by the game.
+
+Do **not** leave final gameplay using generic Unreal placeholder content such as:
+
+- default capsules or primitive meshes as final mobs;
+- the default checkerboard material as final art;
+- flat-colored placeholder materials used as final materials;
+- starter-placeholder-looking props;
+- flat 2D billboards pretending to be final first-person tools;
+- missing-material or invalid-texture assets;
+- obviously unfinished default UI styling.
+
+Temporary placeholders are acceptable during implementation, but they must be replaced before the final completion pass for every important visible gameplay element.
+
+The final project should contain an automated, reproducible asset-generation pipeline so that the project can regenerate or rebuild its own original block materials, mob models, item models, materials, UI assets, and supporting content without requiring me to manually model or wire them in the Unreal Editor.
+
+## Visual direction reminder
+
+This Unreal version should **not** aim for classic pixel-perfect vanilla Minecraft art.
+
+Instead, build a **high-fidelity realistic / stylized-realistic reinterpretation**:
+
+- voxel/block world structure stays recognizable;
+- materials become higher-detail and more realistic;
+- mobs become proper 3D creatures/characters;
+- tools/weapons become proper 3D props;
+- lighting/VFX are much more cinematic.
+
+The result should feel like a UE5 showcase interpretation of Minecraft.
+
+## Terrain/block material generation
+
+Create an automated pipeline for visually distinct material families for the main world blocks.
+
+Block geometry may remain cubic/voxel-aligned, but materials should use richer treatment.
+
+At minimum, important visible block families should have their own recognizable material sets:
+- grass;
+- dirt;
+- stone;
+- cobblestone;
+- deepslate;
+- sand;
+- wood/bark;
+- leaves/foliage;
+- ores;
+- water;
+- lava;
+- obsidian;
+- Nether stone families;
+- End stone / End materials;
+- portal surfaces;
+- crafted/functional blocks like crafting table, furnace, chest, TNT, etc.
+
+Preferred qualities:
+- PBR material workflow;
+- Base Color / Normal / Roughness / AO / Emissive where useful;
+- subtle material variation;
+- believable scale;
+- block-face readability;
+- distinct top/side treatment when useful;
+- biome tinting or parameter variation where practical;
+- animated materials for water, lava, portal, fire, crystals or magical effects where practical.
+
+Use material instances and parameterized master materials where beneficial.
+
+Do not let the final game collapse into one repeated generic material.
+
+## Mob model generation
+
+Every important mob must have an actual recognizable 3D model.
+
+For the Unreal version, these should generally be **more detailed and more realistic** than the versions in the other benchmark engines.
+
+The silhouette and behavior should still clearly identify the mob as the Minecraft creature it represents.
+
+Examples:
+
+### Pig
+- proper 3D animal body, head, ears, legs and snout;
+- stylized-realistic proportions compatible with a voxel world;
+- readable pig identity.
+
+### Cow / Sheep / Chicken
+- full creature models;
+- distinctive species features;
+- wool treatment for sheep if relevant.
+
+### Zombie / Skeleton / Villager / Piglin / Wither Skeleton
+- proper humanoid character models or modular body-part assemblies;
+- appropriate materials/clothing/armor where relevant.
+
+### Creeper
+- preserve the iconic Creeper silhouette and recognizability;
+- reinterpret the surface/materials in a high-fidelity way;
+- create a convincing fuse/charge/explosion visual state.
+
+### Enderman
+- tall, eerie, intimidating humanoid creature;
+- glowing or otherwise strong facial/eye treatment;
+- teleport-friendly VFX.
+
+### Ghast
+- floating, eerie creature;
+- volumetric/organic or semi-organic interpretation is acceptable if recognizably still a Ghast;
+- tentacles and facial features required.
+
+### Blaze
+- floating hostile entity;
+- animated orbiting rods/flames or an equivalent high-quality reinterpretation.
+
+### Shulker
+- shell creature with opening/closing behavior.
+
+### Wither
+- recognizable three-headed boss;
+- proper 3D boss-scale presentation.
+
+### Ender Dragon
+This is one of the most important showcase assets.
+
+Create a convincing, detailed, articulated dragon with:
+- readable head and jaw;
+- neck;
+- torso;
+- tail;
+- wings;
+- legs/feet where useful;
+- attack/flying/perch animation support;
+- a visually impressive presence.
+
+Do not leave Ender Dragon as a primitive, a low-detail blocky toy, or a single static mesh with no convincing motion.
+
+## Asset-generation methods
+
+You may use one or more of these approaches:
+
+1. **In-engine procedural / generated assets**
+   - generated geometry;
+   - Geometry Script / modeling tools;
+   - material-driven detail;
+   - modular meshes;
+   - static/skeletal mesh assembly.
+
+2. **Blender automation**
+   - If Blender is installed and callable from CLI, you may use Blender Python scripts to generate or assemble selected models, then export FBX/GLB and import them into the Unreal project automatically.
+
+3. **Hybrid approach**
+   - simple assets in-engine;
+   - complex hero assets (for example Ender Dragon or certain mobs/items) via Blender automation.
+
+Do not introduce a manual Blender editing dependency. If Blender is used, it must be script-driven and reproducible.
+
+## Skeletal/static mesh practicality
+
+Not every asset needs to be a full hand-rigged skeletal mesh.
+
+Use the right method pragmatically:
+- static meshes for many blocks/props;
+- modular meshes plus procedural animation for simple creatures;
+- skeletal meshes for hero assets or creatures where it helps materially;
+- Blueprint/C++ component animation where appropriate;
+- Niagara/particle accompaniment where useful.
+
+The final result must look intentional and polished enough for a YouTube showcase.
+
+## Held items and tools
+
+Blocks held by the player must render as proper 3D geometry using appropriate materials.
+
+Tools and weapons must be proper 3D props.
+
+This includes, at minimum where implemented:
+- swords;
+- pickaxes;
+- axes;
+- shovels;
+- hoes;
+- spear;
+- bow;
+- crossbow;
+- shield;
+- trident;
+- fishing rod.
+
+Do **not** use a flat 2D icon in front of the camera as the final first-person presentation.
+
+Implement:
+- first-person positioning;
+- equip animation;
+- sway/bob;
+- attack swing;
+- mining swing;
+- bow draw/block/use poses where relevant;
+- convincing scale and materials.
+
+## Functional block and prop models
+
+Important interactive world objects should have real visual identity, not generic cubes:
+
+- crafting table;
+- furnace / blast furnace / smoker;
+- chest / trapped chest / ender chest;
+- enchanting table;
+- brewing stand;
+- anvil;
+- smithing table;
+- beds;
+- torches / lanterns / campfires;
+- TNT;
+- redstone components;
+- portal frames and portal effects;
+- End crystal;
+- beacon;
+- spawner;
+- boats / minecarts where implemented.
+
+These can remain stylistically aligned with a block-world, but they should look authored.
+
+## Character / creature animation
+
+Create reusable animation support for important entities.
+
+Support, where relevant:
+- idle;
+- locomotion;
+- attack;
+- hurt;
+- death;
+- special action loops;
+- boss-specific movement;
+- ranged attack behavior;
+- flying movement;
+- swimming;
+- perching / landing / takeoff for the Ender Dragon if practical.
+
+Procedural or component-based animation is acceptable if it produces convincing results.
+
+## UI asset generation
+
+Generate a polished UI style suitable for this realistic Unreal reinterpretation.
+
+It should still clearly evoke Minecraft's HUD/inventory logic, but it does not need to mimic vanilla pixel-art exactly.
+
+Generate/support visuals for:
+- crosshair;
+- hotbar;
+- selected slot;
+- inventory slots;
+- Creative tabs;
+- search field;
+- Survival HUD;
+- crafting/furnace/anvil/brewing UIs;
+- tooltips;
+- boss bars;
+- buttons and panels.
+
+Use UMG widgets, style assets, generated textures, and material-based UI where practical.
+
+Do not leave the final UI as stock default widgets with no authored styling.
+
+## VFX and presentation
+
+Use Unreal-appropriate effects to elevate the showcase:
+
+- Niagara or equivalent VFX for TNT, portals, lava splashes, torches, pickups, dragon death, End crystals, Wither effects, Ghast fireballs, Creeper explosions, etc.;
+- portal materials with animation/distortion;
+- emissive lava;
+- atmospheric fog;
+- torch/campfire light and particles;
+- Nether ambience;
+- End ambience;
+- damage/hit feedback.
+
+Use these effects strategically; do not tank performance for spectacle alone.
+
+## Generated assets and project organization
+
+Use C++, editor Python, asset tools, and deterministic content generation to automatically create/save/configure, as appropriate:
+
+- materials and material instances;
+- textures or texture-generation outputs;
+- static meshes and/or imported generated meshes;
+- mob assets;
+- item/weapon/tool assets;
+- animation assets or procedural animation setups;
+- Niagara systems where practical;
+- UMG widgets;
+- Data Assets / Data Tables;
+- generated maps/content where appropriate.
+
+Organize generated assets clearly, for example under:
+
+```text
+Content/AstraMinecraft/Generated/
+  Materials/
+  MaterialInstances/
+  Meshes/
+  Mobs/
+  Items/
+  UI/
+  VFX/
+  Textures/
+  Audio/
+```
+
+## Asset rebuild path
+
+Create one reproducible editor command, Python script, or documented automation entry point that can rebuild or regenerate generated content if needed.
+
+For example, something conceptually like:
+- a Python entry point;
+- a custom editor utility command;
+- or a documented automation command line.
+
+It should be possible to rebuild generated assets without requiring me to manually reconstruct the project.
+
+## Asset completion gate
+
+Before final completion, inspect the visible result and explicitly verify:
+
+- important mobs are not placeholder capsules/primitives;
+- held tools are not flat 2D placeholders;
+- important interactive blocks have authored visuals;
+- terrain material families are visually distinct;
+- Nether has its own material language;
+- End has its own material language;
+- portals have strong animated visuals;
+- Ender Dragon is a convincing detailed boss model;
+- Wither is a convincing boss model;
+- TNT has convincing visuals/VFX;
+- the HUD and inventory are styled, not raw default widgets;
+- there are no obvious default checker materials in shipping gameplay.
+
+Add these checks to `FEATURE_MATRIX.md`.
+
+If any requirement remains incomplete, mark it honestly as `PARTIAL` or `NOT IMPLEMENTED`.
+
+
+# 31. Audio
+
+Do not use copied Minecraft audio.
+
+If practical, generate or synthesize simple original sounds for:
+- footsteps by material family;
+- block break/place;
+- pickup;
+- UI click;
+- player hurt;
+- mob hurt/death;
+- bow;
+- TNT fuse/explosion;
+- portal;
+- water/lava;
+- key mob sounds.
+
+Audio is lower priority than stable gameplay, but silence everywhere should be avoided if inexpensive procedural sound generation is possible.
+
+---
+
+# 32. Save/load — mandatory
+
+Worlds and dimensions must persist.
+
+Save:
+- world seed;
+- player position;
+- game mode;
+- inventory;
+- health/hunger/XP;
+- changed blocks;
+- containers;
+- time of day;
+- entities where practical;
+- dimension state;
+- generated/modified chunk data.
+
+Do not serialize every untouched procedurally-generated block. Save the seed plus modifications where practical.
+
+Portaling between Overworld/Nether/End must preserve each dimension.
+
+---
+
+# 33. Performance and robustness
+
+Avoid:
+- one Actor per block;
+- unbounded entity spawning;
+- rebuilding the whole world when one block changes;
+- huge allocations every frame;
+- expensive `FindObjectOfType` loops;
+- excessive `Update` methods for thousands of entities.
+
+Use:
+- chunk data arrays;
+- pooled entities;
+- configurable render distance;
+- sensible mob caps;
+- chunk streaming;
+- localized mesh rebuilds;
+- frustum/distance awareness where practical.
+
+Default settings should be suitable for screen recording.
+
+---
+
+# 34. Unreal automation and validation
+
+Find the installed Unreal Engine executable(s) automatically if possible.
+
+Useful executables may include:
+- `UnrealEditor.exe`
+- `UnrealEditor-Cmd.exe`
+- `RunUAT.bat`
+- `UnrealBuildTool` or the relevant build entry points through Visual Studio/MSBuild
+
+Use the actual installed engine path and project `.uproject` path. Do not assume hard-coded locations if they can be detected.
+
+Use Unreal-native compilation and automation wherever practical.
+
+At minimum:
+
+1. Validate the C++ project builds.
+   - Generate/update project files if necessary.
+   - Build the Editor target for the project in Development Editor (or an equivalent workable configuration).
+   - Inspect compiler/build errors and fix them.
+
+2. Run the project/editor in command-line form where practical.
+   Useful options may include headless/commandlet/editor-cmd workflows suitable for:
+   - loading the project;
+   - executing Python scripts;
+   - regenerating assets;
+   - validating maps;
+   - catching startup errors.
+
+3. Inspect logs for:
+   - C++ compile errors;
+   - missing module/plugin errors;
+   - asset load failures;
+   - Blueprint compile errors where applicable;
+   - shader/material compile failures;
+   - invalid references/redirector issues;
+   - map load failures;
+   - Python automation failures.
+
+4. Repeat until the project opens cleanly.
+
+5. Validate that:
+   - the `.uproject` is healthy;
+   - enabled plugins required by the project are configured;
+   - the default map/game mode/pawn flow is correctly wired;
+   - input bindings are configured;
+   - materials/assets referenced by gameplay are valid;
+   - content generation does not create uncontrolled duplicates.
+
+6. If the project can reliably package a Windows build, create a development build under something like:
+
+```text
+Builds/Windows/
+```
+
+However, prioritize a healthy Editor project first. If packaging is blocked by environment issues but the Editor project is healthy, document this clearly rather than blocking the entire task.
+
+## Unreal-specific performance validation
+
+Watch for:
+- millions of individual Actors/components for terrain blocks;
+- per-block ticking;
+- rebuilding the entire world when one block changes;
+- uncontrolled Niagara or particle spam;
+- unbounded mob/item Actor counts;
+- expensive Blueprint logic on large counts of entities;
+- repeated synchronous asset scans/generation on the main thread;
+- runaway shader/material complexity for common block surfaces.
+
+Prefer chunk-local updates, efficient mesh generation, pooling where useful, localized explosions, sensible spawn caps, and stable first-person performance suitable for screen recording.
+
+## Practical build/testing tools
+
+Use the tools that are realistically available on this Windows machine, such as:
+- Visual Studio / MSBuild;
+- UnrealBuildTool through the engine;
+- `UnrealEditor-Cmd.exe` with Python/editor automation;
+- command-line log capture.
+
+Do not assume a file merely exists means the project works.
+
+
+# 35. Required testing checklist
+
+Before declaring completion, verify as many as possible:
+
+## Core
+- project builds and opens cleanly;
+- world loads;
+- chunks stream;
+- player does not fall through terrain;
+- no major console-error spam;
+- save/load works.
+
+## Creative
+- default launch is Creative;
+- flight works;
+- instant break works;
+- unlimited placement works;
+- Creative inventory opens;
+- search works;
+- any implemented block/item can be obtained;
+- any implemented mob can be spawned;
+- bosses can be test-spawned;
+- hostile mobs ignore Creative player under normal conditions.
+
+## Survival
+- Creative catalog is gone;
+- health/hunger work;
+- blocks take time to mine;
+- drops are collected;
+- crafting works;
+- tools have tiers/durability;
+- food works;
+- mobs attack;
+- death/respawn works.
+
+## Portals
+- build/ignite Nether portal;
+- travel Overworld -> Nether;
+- return Nether -> Overworld;
+- inventory is preserved;
+- coordinates map sensibly;
+- dimension state persists.
+
+## Nether
+- recognizable terrain/biomes;
+- lava;
+- fortress;
+- blaze;
+- piglin/hoglin/ghast-type mobs;
+- obtainable blaze rod.
+
+## End
+- locate/enter stronghold;
+- activate End portal;
+- travel to End;
+- Ender Dragon exists and can be defeated;
+- crystals heal dragon;
+- exit portal activates;
+- outer islands reachable;
+- End City/Shulker/Elytra if implemented.
+
+## Combat/explosions
+- melee works;
+- bow works if implemented;
+- Creeper explosion works;
+- TNT damages terrain/entities;
+- Wither works if implemented.
+
+## UI
+- hotbar;
+- inventory;
+- tooltips;
+- Survival HUD;
+- pause;
+- no cursor-lock traps.
+
+---
+
+# 36. Development files you must maintain
+
+Create/update:
+
+## `DEVELOPMENT.md`
+Include:
+- engine version;
+- architecture;
+- how project bootstraps;
+- exact controls;
+- save location;
+- major systems;
+- build/run instructions;
+- known limitations.
+
+## `FEATURE_MATRIX.md`
+Use a table with:
+- Feature
+- Status: `WORKING`, `PARTIAL`, `NOT IMPLEMENTED`
+- Test notes
+
+List all major requirements from this prompt honestly.
+
+Do not label a feature WORKING merely because a class exists.
+
+## `ASTRA_FINAL_REPORT.md`
+Create this at the very end with:
+- overview;
+- major implemented features;
+- known bugs;
+- exact controls;
+- build/validation result;
+- count of files added/changed if practical;
+- rough lines of code if practical;
+- session metrics described below.
+
+---
+
+# 37. Session timing, token accounting and API-equivalent cost
+
+This section is mandatory because these numbers will be used in the YouTube comparison.
+
+## Start timer BEFORE substantial work
+
+At the very beginning of the task:
+
+1. Read the current local timestamp from the operating system, not from memory.
+2. Save it to:
+   ```text
+   .astra-run/start_time.txt
+   ```
+3. Also write the timestamp into `ASTRA_FINAL_REPORT.md` later.
+
+At the end:
+1. read the current local timestamp again;
+2. save it to:
+   ```text
+   .astra-run/end_time.txt
+   ```
+3. calculate wall-clock elapsed time.
+
+Report:
+- start timestamp;
+- end timestamp;
+- total elapsed wall-clock time in `HH:MM:SS`;
+- total minutes.
+
+The timer includes coding, tool calls, builds, debugging and waiting for commands/builds during this session.
+
+## Token usage
+
+At the end, make a best effort to obtain **real session usage**, not a guess.
+
+Preferred sources, in order:
+1. session/runtime usage telemetry exposed directly by Codex;
+2. if available, the current Codex session JSONL/log under the user's Codex session directory (commonly under `~/.codex/sessions` or `%USERPROFILE%\.codex\sessions` on Windows);
+3. another official local session-usage source.
+
+Identify the current session carefully using working directory, timestamps/session IDs and recent activity.
+
+Report separately where available:
+- input tokens;
+- cached input tokens;
+- cache-write tokens;
+- output tokens;
+- reasoning tokens if reported separately;
+- total tokens.
+
+**Avoid double-counting cumulative token snapshots/events in session logs.**
+Determine whether usage records are per-turn or cumulative before summing.
+
+If exact token usage is not accessible, explicitly write:
+`Exact token usage unavailable from the accessible runtime`
+and provide only a clearly labeled estimate if a defensible estimate can be computed. Never fabricate precision.
+
+## GPT-6 Astra API-equivalent token cost
+
+For this benchmark, use the following **Standard API text-token rates valid for GPT-6 Astra on 2026-09-12**:
+
+- uncached input: **$10.00 per 1M tokens**
+- cached input: **$1.00 per 1M tokens**
+- cache writes: **$12.50 per 1M tokens**
+- output: **$50.00 per 1M tokens**
+
+Compute a **token-only API-equivalent USD cost**, not the user's actual ChatGPT subscription charge.
+
+When the usage telemetry provides total input with cached/cache-write tokens as subsets, subtract the subsets appropriately so that tokens are not charged twice.
+
+Base formula:
+
+```text
+non_cached_input = input_tokens - cached_input_tokens - cache_write_tokens
+
+cost =
+  (non_cached_input / 1,000,000 * 10.00)
++ (cached_input_tokens / 1,000,000 * 1.00)
++ (cache_write_tokens / 1,000,000 * 12.50)
++ (output_tokens / 1,000,000 * 50.00)
+```
+
+If the runtime reports token categories differently, adapt the formula to the actual semantics and explain it.
+
+### Long-context API pricing
+
+For normal GPT-6 Astra API requests with more than **272K input tokens**, the published API pricing applies:
+- input/cache rates: 2× for the full request;
+- output rate: 1.5× for the full request.
+
+If you have **per-request/per-turn token usage** and can determine which requests crossed that threshold, apply this accurately.
+
+If you have only aggregate session totals and cannot determine which individual requests exceeded 272K input tokens:
+- report the normal-rate token-only API equivalent;
+- explicitly state that the long-context multiplier could not be reconstructed from aggregate data;
+- do not invent an adjusted figure.
+
+If tool calls would have separate API fees and exact fees are not available from the session, keep the reported figure explicitly labeled **token-only API equivalent**.
+
+## Metrics output format
+
+At the bottom of `ASTRA_FINAL_REPORT.md`, include:
+
+```text
+## Astra Session Metrics
+
+Start:
+End:
+Elapsed:
+Elapsed minutes:
+
+Model:
+Reasoning effort (if available):
+
+Input tokens:
+Cached input tokens:
+Cache-write tokens:
+Output tokens:
+Reasoning tokens (if separately available):
+Total tokens:
+
+GPT-6 Astra standard API-equivalent token cost:
+Long-context adjustment:
+Tool fees included: No/Yes
+Confidence / data source:
+```
+
+---
+
+# 38. Final behavior
+
+Do not finish by simply saying that files were created.
+
+Before final response:
+
+1. inspect `FEATURE_MATRIX.md`;
+2. run final build/editor validation;
+3. fix any newly discovered C++/asset/build errors;
+4. confirm default mode is Creative;
+5. confirm Creative inventory/spawn interface is accessible;
+6. confirm Survival mode is accessible;
+7. confirm portals and dimensions that are marked WORKING actually have code/content wired up;
+8. write `ASTRA_FINAL_REPORT.md`;
+9. record session end metrics;
+10. make a final Git commit if Git is configured and the project is healthy.
+
+Then respond with a concise summary:
+- what works;
+- how to launch;
+- key controls;
+- what remains incomplete;
+- elapsed time;
+- tokens;
+- API-equivalent cost.
+
+Do not claim untested or partial features are complete.
+
+---
+
+# 39. Start now
+
+Begin with project inspection, timestamp capture and architecture planning.
+
+Then build the game.
+
+Do not wait for additional confirmation from me unless an external permission/dialog/installation issue genuinely prevents progress.

@@ -1,0 +1,92 @@
+name: Build Godot release
+
+on:
+  push:
+    tags:
+      - "godot-v*"
+
+permissions:
+  contents: write
+
+env:
+  GODOT_VERSION: "4.7.2"
+  PROJECT_DIR: "Godot Opus 5.5 Minecraft"
+
+jobs:
+  build-and-release:
+    name: Windows and macOS
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Download official Godot editor and export templates
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable"
+          curl --fail --location --retry 3 --output godot.zip \
+            "$base/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          curl --fail --location --retry 3 --output templates.tpz \
+            "$base/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
+          unzip -q godot.zip
+          mv "Godot_v${GODOT_VERSION}-stable_linux.x86_64" godot
+          chmod +x godot
+          mkdir -p "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable"
+          unzip -q templates.tpz \
+            templates/version.txt \
+            templates/windows_release_x86_64.exe \
+            templates/macos.zip \
+            -d template-package
+          mv template-package/templates/* \
+            "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable/"
+
+      - name: Import project
+        shell: bash
+        run: ./godot --headless --path "$PROJECT_DIR" --import
+
+      - name: Run automated tests
+        shell: bash
+        run: ./godot --headless --path "$PROJECT_DIR" res://game/tests/test_runner.tscn
+
+      - name: Export Windows and macOS builds
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist/windows
+          ./godot --headless --path "$PROJECT_DIR" \
+            --export-release "Windows Desktop" \
+            "$GITHUB_WORKSPACE/dist/windows/GodotMinecraft.exe"
+          cp "$PROJECT_DIR/RUN_WINDOWS.txt" dist/windows/
+          (cd dist/windows && zip -q ../GodotMinecraft-Windows-x86_64.zip \
+            GodotMinecraft.exe RUN_WINDOWS.txt)
+          ./godot --headless --path "$PROJECT_DIR" \
+            --export-release "macOS" \
+            "$GITHUB_WORKSPACE/dist/GodotMinecraft-macOS-universal.zip"
+          (cd dist && sha256sum GodotMinecraft-*.zip > SHA256SUMS.txt)
+
+      - name: Publish GitHub release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          notes=$(cat <<'EOF'
+          Готовая сборка Godot-проекта.
+
+          - **Windows:** скачайте `GodotMinecraft-Windows-x86_64.zip`, распакуйте и запустите `GodotMinecraft.exe`.
+          - **macOS:** скачайте `GodotMinecraft-macOS-universal.zip`, распакуйте и откройте приложение. Сборка универсальна для Intel и Apple Silicon.
+
+          Подробности запуска и управления находятся в README проекта. Контрольные суммы — в `SHA256SUMS.txt`.
+          EOF
+          )
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" dist/GodotMinecraft-*.zip \
+              dist/SHA256SUMS.txt --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" dist/GodotMinecraft-*.zip \
+              dist/SHA256SUMS.txt --verify-tag \
+              --title "Godot Minecraft 1.0.0" --notes "$notes"
+          fi

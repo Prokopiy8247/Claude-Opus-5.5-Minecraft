@@ -1,0 +1,60 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Local editor, OS and session metadata
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.vs/
+.opus55-run/
+.claude/
+
+# Never commit credentials or signing material
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.pfx
+*.p8
+*.jks
+*.keystore
+*.mobileprovision
+*.cer
+*.key
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+export_credentials.cfg
+credentials.*
+secrets.*
+
+# Export / build output
+/builds/
+*.tmp
+*.translation
+
+# Mono / misc
+.mono/
+data_*/
+mono_crash.*.json
+
+# Python caches for tooling
+__pycache__/
+*.pyc
+
+# Blender autosave/backups
+*.blend1
+*.blend2
+
+# Local screenshots / scratch
+/.opus55-run/scratch/
+/shots/
+
+# Exported game build
+/GodotMinecraft.exe
+/GodotMinecraft.pck
+/builds/

@@ -6,7 +6,7 @@
 
 ### Windows
 
-1. Скачайте [Minecraft-Recreation-Windows-x64.zip](https://github.com/Prokopiy8247/Claude-Opus-5.5-Minecraft/releases/latest/download/Minecraft-Recreation-Windows-x64.zip).
+1. Скачайте [Minecraft-Recreation-Windows-x64.zip](https://github.com/Prokopiy8247/Claude-Opus-5.5-Minecraft/releases/download/unity-v1.0.0/Minecraft-Recreation-Windows-x64.zip).
 2. Нажмите на архив правой кнопкой → **Извлечь всё**. Не запускайте EXE прямо из архива.
 3. Откройте распакованную папку и запустите `PLAY-WINDOWS.bat` или `MinecraftRecreation.exe`.
 4. Если Windows SmartScreen предупредит о неизвестном издателе, убедитесь, что файл скачан из этого репозитория, затем выберите **Подробнее → Выполнить в любом случае**.
@@ -15,7 +15,7 @@
 
 ### macOS
 
-1. Скачайте [Minecraft-Recreation-macOS-Universal.zip](https://github.com/Prokopiy8247/Claude-Opus-5.5-Minecraft/releases/latest/download/Minecraft-Recreation-macOS-Universal.zip).
+1. Скачайте [Minecraft-Recreation-macOS-Universal.zip](https://github.com/Prokopiy8247/Claude-Opus-5.5-Minecraft/releases/download/unity-v1.0.0/Minecraft-Recreation-macOS-Universal.zip).
 2. Распакуйте архив и откройте `Minecraft Recreation.app` либо `PLAY ON MAC.command`.
 3. Сборка не подписана и не нотарифицирована Apple. При первом запуске нажмите приложение правой кнопкой → **Открыть** → **Открыть**. Если кнопки нет: **Системные настройки → Конфиденциальность и безопасность → Всё равно открыть**.
 
