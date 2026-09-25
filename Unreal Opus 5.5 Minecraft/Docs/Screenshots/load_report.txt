@@ -1,0 +1,7 @@
+warm-up 8.0s, world 'Tour' seed 12345, stand (-21.5, -51.5, 33.0)
+  fps=165 gt=2.0 rt=5.2 gpu=3.0 tick=0.55ms chunks=841 meshes=1250 drawn=13 tris=5812736 pending=0 entities=16 lights=24 dim=1 pos=(-21.5, -51.5, 33.0)
+  entities by type (16): zombified_piglin=6 blaze=4 wither_skeleton=4 item:crimson_roots=1 MCPlayer=1
+    reloaded: dim=1 pos=(-21.5, -51.5, 33.0) mode=1 held=grass_block x64
+SHOT L1_reloaded_world after 2.0s  fps=174 gt=1.6 rt=6.0 gpu=2.7 tick=1.21ms chunks=841 meshes=1250 drawn=13 tris=5812736 pending=0 entities=19 lights=24 dim=1 pos=(-21.5, -51.5, 33.0)
+  entities by type (20): zombified_piglin=6 wither_skeleton=4 blaze=4 magma_cube=2 piglin=1 item:crimson_roots=1 skeleton=1 MCPlayer=1
+done: 1 screenshots, 0 skipped, 10.6s total, average frame 6.79 ms (147 fps), worst frame 400.0 ms
