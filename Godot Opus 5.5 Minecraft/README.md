@@ -9,7 +9,7 @@ Claude Opus 5.5. Для запуска готовой игры устанавл�
 ## Самый простой запуск
 
 Перейдите на страницу
-[последнего релиза](https://github.com/Prokopiy8247/Claude-Opus-5.5-Minecraft/releases/latest)
+[релиза Godot v1.0.0](https://github.com/Prokopiy8247/Claude-Opus-5.5-Minecraft/releases/tag/godot-v1.0.0)
 и скачайте архив для своей системы.
 
 ### Windows 10/11
