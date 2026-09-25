@@ -13,5 +13,9 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-      - name: Scan tracked files
-        run: python "Unity Opus 5.5 Minecraft/Tools/check_secrets.py"
+        with:
+          fetch-depth: 0
+      - name: Scan current files and reachable history
+        run: |
+          python "Unity Opus 5.5 Minecraft/Tools/check_secrets.py"
+          python "Unity Opus 5.5 Minecraft/Tools/check_secrets.py" --history
