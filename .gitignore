@@ -1,6 +1,7 @@
 # OS and editor files
 .DS_Store
 Thumbs.db
+Desktop.ini
 .idea/
 .vscode/
 .vs/
@@ -36,4 +37,3 @@ id_ed25519.*
 **/builds/
 **/GodotMinecraft.exe
 **/GodotMinecraft.pck
-

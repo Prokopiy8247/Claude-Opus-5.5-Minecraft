@@ -1,16 +1,17 @@
 # Claude Opus 5.5 — Minecraft в игровых движках
 
-Публичный репозиторий с проектами из сравнения игровых движков.
+Публичный репозиторий проектов, созданных Claude Opus 5.5 для сравнительного YouTube-видео.
+Каждый движок находится в отдельной папке и имеет собственный гайд по запуску.
 
 ## Проекты
 
 | Папка | Движок | Статус |
 |---|---|---|
 | [`Godot Opus 5.5 Minecraft`](./Godot%20Opus%205.5%20Minecraft/) | Godot 4.7.2 | Готово |
+| [`Unreal Opus 5.5 Minecraft`](./Unreal%20Opus%205.5%20Minecraft/) | Unreal Engine 5.8 | Готово |
 | `Unity Opus 5.5 Minecraft` | Unity | Будет добавлено позже |
-| `Unreal Engine 5 Opus 5.5 Minecraft` | Unreal Engine 5 | Будет добавлено позже |
 
-## Скачать готовую игру
+## Быстрый старт Godot-версии
 
 Откройте [последний релиз](https://github.com/Prokopiy8247/Claude-Opus-5.5-Minecraft/releases/latest)
 и скачайте архив для своей системы:
@@ -20,6 +21,11 @@
 
 Пошаговая инструкция и управление находятся в
 [`Godot Opus 5.5 Minecraft/README.md`](./Godot%20Opus%205.5%20Minecraft/README.md).
+
+## Быстрый старт Unreal-версии
+
+Откройте [`Unreal Opus 5.5 Minecraft`](./Unreal%20Opus%205.5%20Minecraft/) и следуйте инструкции
+для своей системы. Для первого запуска потребуется Unreal Engine 5.8.x и системный C++ toolchain.
 
 ## Важно
 

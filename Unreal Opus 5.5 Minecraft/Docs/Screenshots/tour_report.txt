@@ -1,0 +1,77 @@
+warm-up 8.0s, world 'Tour' seed 12345, stand (-229.5, -325.5, 68.0)
+  fps=76 gt=11.5 rt=10.0 gpu=4.4 tick=3.53ms chunks=841 meshes=1786 drawn=274 tris=6548704 pending=0 entities=196 lights=18 dim=0 pos=(-229.5, -325.5, 68.0)
+  entities by type (196): chicken=38 cow=31 sheep=28 pig=27 wolf=17 villager=17 horse=6 item:cornflower=5 skeleton=4 item:poppy=4 creeper=3 fox=3 zombie=2 item:red_tulip=2 item:wheat_seeds=2 MCPlayer=1
+SHOT 01_spawn_view after 2.0s  fps=92 gt=11.9 rt=12.2 gpu=5.0 tick=4.17ms chunks=841 meshes=1786 drawn=387 tris=6552322 pending=0 entities=203 lights=18 dim=0 pos=(-229.5, -325.5, 68.0)
+SHOT 02_spawn_reverse after 2.0s  fps=116 gt=27.5 rt=9.7 gpu=5.0 tick=4.76ms chunks=841 meshes=1786 drawn=468 tris=6556722 pending=0 entities=214 lights=18 dim=0 pos=(-229.5, -325.5, 68.0)
+SHOT 03_aerial after 3.0s  fps=109 gt=4.5 rt=7.0 gpu=6.2 tick=4.45ms chunks=841 meshes=1786 drawn=486 tris=6562666 pending=0 entities=229 lights=0 dim=0 pos=(-235.5, -331.5, 102.0)
+SHOT 04_debug_overlay after 1.5s  fps=104 gt=4.9 rt=7.9 gpu=4.8 tick=4.61ms chunks=841 meshes=1787 drawn=387 tris=6566374 pending=0 entities=241 lights=18 dim=0 pos=(-229.5, -325.5, 68.0)
+SHOT 05_stage after 2.0s  fps=107 gt=4.4 rt=7.5 gpu=5.2 tick=5.63ms chunks=841 meshes=1787 drawn=417 tris=6563366 pending=0 entities=260 lights=9 dim=0 pos=(-229.5, -325.5, 68.0)
+    spawned 6/6
+SHOT 06_mobs_hostile after 2.0s  fps=98 gt=3.1 rt=7.7 gpu=4.8 tick=4.93ms chunks=841 meshes=1788 drawn=404 tris=6567430 pending=0 entities=224 lights=9 dim=0 pos=(-229.5, -325.5, 68.0)
+    first mob: MCMob_200 at X=-22250.000 Y=-33025.000 Z=6800.000 hidden=0, 6 primitives, rig zombie reg=1 vis=1 at X=-22250.000 Y=-33025.000 Z=6800.000 scale X=1.000 Y=1.000 Z=1.000 parts=6
+      Part_body reg=1 vis=1 hiddenInGame=0 proxy=1 at X=-22250.000 Y=-33025.000 Z=6875.000 scale X=1.000 Y=1.000 Z=1.000 mesh=SM_zombie__body radius=46.8 mat=MID_M_MCEntity_0
+      Part_head reg=1 vis=1 hiddenInGame=0 proxy=1 at X=-22250.000 Y=-33025.000 Z=6950.000 scale X=1.000 Y=1.000 Z=1.000 mesh=SM_zombie__head radius=43.3 mat=MID_M_MCEntity_0
+      Part_right_arm reg=1 vis=1 hiddenInGame=0 proxy=1 at X=-22250.000 Y=-33062.500 Z=6937.500 scale X=1.000 Y=1.000 Z=1.000 mesh=SM_zombie__right_arm radius=41.5 mat=MID_M_MCEntity_0
+      Part_left_arm reg=1 vis=1 hiddenInGame=0 proxy=1 at X=-22250.000 Y=-32987.500 Z=6937.500 scale X=1.000 Y=1.000 Z=1.000 mesh=SM_zombie__left_arm radius=41.5 mat=MID_M_MCEntity_0
+    spawned 6/6
+SHOT 07_mobs_passive after 2.0s  fps=98 gt=12.0 rt=10.8 gpu=5.1 tick=5.54ms chunks=841 meshes=1788 drawn=417 tris=6572900 pending=0 entities=239 lights=9 dim=0 pos=(-229.5, -325.5, 68.0)
+    spawned 6/6
+SHOT 08_mobs_new after 2.0s  fps=107 gt=4.4 rt=13.6 gpu=4.8 tick=4.52ms chunks=841 meshes=1791 drawn=404 tris=6577474 pending=0 entities=252 lights=9 dim=0 pos=(-229.5, -325.5, 68.0)
+    spawned 6/6
+SHOT 09_mobs_nether after 2.0s  fps=100 gt=14.4 rt=12.0 gpu=5.4 tick=5.19ms chunks=841 meshes=1791 drawn=398 tris=6581276 pending=0 entities=262 lights=9 dim=0 pos=(-229.5, -325.5, 68.0)
+    spawned 5/5
+SHOT 10_mobs_large after 2.0s  fps=102 gt=3.7 rt=10.0 gpu=5.2 tick=4.93ms chunks=841 meshes=1792 drawn=378 tris=6584756 pending=0 entities=262 lights=9 dim=0 pos=(-229.5, -325.5, 68.0)
+    spawned 7/7
+SHOT 11_mobs_small after 2.0s  fps=95 gt=4.2 rt=13.6 gpu=5.2 tick=4.89ms chunks=841 meshes=1796 drawn=445 tris=6587936 pending=0 entities=271 lights=9 dim=0 pos=(-229.5, -325.5, 68.0)
+SHOT 12_entities after 2.0s  fps=109 gt=3.2 rt=8.8 gpu=5.3 tick=4.91ms chunks=841 meshes=1797 drawn=424 tris=6590714 pending=0 entities=275 lights=9 dim=0 pos=(-229.5, -325.5, 68.0)
+  entities by type (277): cow=29 chicken=27 item:dandelion=26 sheep=22 pig=21 item:poppy=20 creeper=17 item:wheat_seeds=17 wolf=17 skeleton=15 zombie=12 item:sugar_cane=6 item:mutton=6 item:cornflower=6 item:white_wool=5 item:lily_of_the_valley=5
+SHOT 13_third_person_back after 1.5s  fps=105 gt=3.8 rt=9.6 gpu=5.0 tick=5.15ms chunks=841 meshes=1797 drawn=446 tris=6592130 pending=30 entities=281 lights=8 dim=0 pos=(-226.5, -325.5, 68.0)
+SHOT 14_third_person_front after 1.5s  fps=107 gt=6.3 rt=7.9 gpu=5.2 tick=5.05ms chunks=841 meshes=1797 drawn=278 tris=6594044 pending=0 entities=283 lights=8 dim=0 pos=(-226.5, -325.5, 68.0)
+SHOT 15_first_person_tool after 1.5s  fps=105 gt=3.0 rt=13.5 gpu=5.0 tick=4.76ms chunks=841 meshes=1801 drawn=449 tris=6594924 pending=0 entities=284 lights=9 dim=0 pos=(-229.5, -325.5, 68.0)
+    player: MCPlayer_0 at X=-22950.000 Y=-32550.000 Z=6800.000 hidden=0, 11 primitives, rig player reg=1 vis=0 at X=-22950.000 Y=-32550.000 Z=6800.000 scale X=1.000 Y=1.000 Z=1.000 parts=6
+      CameraProxyMeshComponent_0 reg=1 vis=0 hiddenInGame=1 proxy=0 at X=-22950.000 Y=-32550.000 Z=6962.000 scale X=1.000 Y=1.000 Z=1.000 mesh=MatineeCam_SM radius=57.2 mat=MatineeCam_mat
+      DrawFrustumComponent_0 reg=1 vis=0 hiddenInGame=1 proxy=0 at X=-22950.000 Y=-32550.000 Z=6962.000 scale X=1.000 Y=1.000 Z=1.000 mesh=- radius=1010.0 mat=-
+      Part_body reg=1 vis=0 hiddenInGame=0 proxy=1 at X=-22950.000 Y=-32550.000 Z=6875.000 scale X=1.000 Y=1.000 Z=1.000 mesh=SM_player__body radius=46.8 mat=MID_M_MCEntity_0
+      Part_head reg=1 vis=0 hiddenInGame=0 proxy=1 at X=-22950.000 Y=-32550.000 Z=6950.000 scale X=1.000 Y=1.000 Z=1.000 mesh=SM_player__head radius=43.3 mat=MID_M_MCEntity_0
+      Part_right_arm reg=1 vis=0 hiddenInGame=0 proxy=1 at X=-22921.273 Y=-32525.895 Z=6937.500 scale X=1.000 Y=1.000 Z=1.000 mesh=SM_player__right_arm radius=41.5 mat=MID_M_MCEntity_0
+      Part_left_arm reg=1 vis=0 hiddenInGame=0 proxy=1 at X=-22978.727 Y=-32574.105 Z=6937.500 scale X=1.000 Y=1.000 Z=1.000 mesh=SM_player__left_arm radius=41.5 mat=MID_M_MCEntity_0
+      Part_right_leg reg=1 vis=0 hiddenInGame=0 proxy=1 at X=-22940.424 Y=-32541.965 Z=6875.000 scale X=1.000 Y=1.000 Z=1.000 mesh=SM_player__right_leg radius=41.5 mat=MID_M_MCEntity_0
+      Part_left_leg reg=1 vis=0 hiddenInGame=0 proxy=1 at X=-22959.576 Y=-32558.035 Z=6875.000 scale X=1.000 Y=1.000 Z=1.000 mesh=SM_player__left_leg radius=41.5 mat=MID_M_MCEntity_0
+      Arm reg=1 vis=0 hiddenInGame=0 proxy=0 at X=-22916.686 Y=-32527.280 Z=6936.577 scale X=1.136 Y=1.136 Z=1.136 mesh=SM_PlayerArm radius=27.1 mat=M_MCEntity
+      Authored reg=1 vis=1 hiddenInGame=0 proxy=1 at X=-22916.686 Y=-32527.280 Z=6936.577 scale X=0.222 Y=0.222 Z=0.222 mesh=SM_Pickaxe radius=14.9 mat=MID_M_MCEntity_0
+      Generated reg=1 vis=1 hiddenInGame=0 proxy=0 at X=-22916.686 Y=-32527.280 Z=6936.577 scale X=1.136 Y=1.136 Z=1.136 mesh=- radius=17.1 mat=MID_M_MCVoxel_Opaque_0
+SHOT 16_first_person_block after 1.5s  fps=102 gt=3.1 rt=13.1 gpu=4.8 tick=5.43ms chunks=841 meshes=1802 drawn=449 tris=6596272 pending=0 entities=289 lights=9 dim=0 pos=(-229.5, -325.5, 68.0)
+SHOT 17_creative_inventory after 1.5s  fps=104 gt=3.8 rt=8.2 gpu=5.2 tick=5.63ms chunks=841 meshes=1802 drawn=449 tris=6597030 pending=2 entities=295 lights=9 dim=0 pos=(-229.5, -325.5, 68.0)
+SHOT 18_survival_inventory after 1.5s  fps=98 gt=19.0 rt=10.5 gpu=5.2 tick=5.10ms chunks=841 meshes=1802 drawn=337 tris=6598258 pending=7 entities=304 lights=9 dim=0 pos=(-229.5, -325.5, 68.0)
+SHOT 19_survival_hud after 1.5s  fps=107 gt=2.9 rt=8.7 gpu=5.0 tick=4.73ms chunks=841 meshes=1807 drawn=337 tris=6599454 pending=0 entities=322 lights=9 dim=0 pos=(-229.5, -325.5, 68.0)
+SHOT 20_crafting_table after 1.5s  fps=102 gt=3.8 rt=10.6 gpu=5.4 tick=5.61ms chunks=841 meshes=1807 drawn=337 tris=6599896 pending=0 entities=325 lights=9 dim=0 pos=(-229.5, -325.5, 68.0)
+SHOT 21_furnace after 1.5s  fps=96 gt=4.3 rt=9.4 gpu=4.9 tick=5.50ms chunks=841 meshes=1807 drawn=337 tris=6600706 pending=0 entities=332 lights=9 dim=0 pos=(-229.5, -325.5, 68.0)
+SHOT 22_chest after 1.5s  fps=111 gt=3.7 rt=7.5 gpu=5.3 tick=5.20ms chunks=841 meshes=1807 drawn=337 tris=6601492 pending=16 entities=334 lights=9 dim=0 pos=(-229.5, -325.5, 68.0)
+SHOT 23_enchanting_table after 1.5s  fps=82 gt=9.5 rt=10.6 gpu=5.3 tick=4.99ms chunks=841 meshes=1812 drawn=337 tris=6602260 pending=0 entities=336 lights=9 dim=0 pos=(-229.5, -325.5, 68.0)
+SHOT 24_brewing_stand after 1.5s  fps=108 gt=4.0 rt=9.7 gpu=5.3 tick=4.16ms chunks=841 meshes=1812 drawn=337 tris=6603446 pending=0 entities=348 lights=9 dim=0 pos=(-229.5, -325.5, 68.0)
+SHOT 25_anvil after 1.5s  fps=114 gt=3.3 rt=12.2 gpu=4.8 tick=4.34ms chunks=841 meshes=1812 drawn=337 tris=6604248 pending=0 entities=367 lights=9 dim=0 pos=(-229.5, -325.5, 68.0)
+SHOT 26_night_lighting after 3.0s  fps=113 gt=4.3 rt=7.9 gpu=4.2 tick=4.30ms chunks=841 meshes=1812 drawn=149 tris=6606812 pending=0 entities=381 lights=16 dim=0 pos=(-229.5, -325.5, 68.0)
+SHOT 27_rain after 3.0s  fps=111 gt=4.5 rt=8.5 gpu=4.4 tick=4.33ms chunks=841 meshes=1812 drawn=329 tris=6610164 pending=17 entities=385 lights=16 dim=0 pos=(-229.5, -325.5, 68.0)
+SHOT 27a_tnt after 5.5s  fps=104 gt=8.5 rt=9.3 gpu=4.2 tick=3.82ms chunks=841 meshes=1812 drawn=506 tris=6613458 pending=0 entities=398 lights=12 dim=0 pos=(-229.5, -325.5, 72.0)
+    tnt: detonated, crater 93 of 147 ground blocks removed
+    nether portal: ignite=ok, 6/6 portal blocks
+SHOT 27b_nether_portal after 2.5s  fps=62 gt=4.2 rt=9.7 gpu=5.1 tick=3.96ms chunks=870 meshes=1885 drawn=242 tris=6894654 pending=0 entities=410 lights=18 dim=0 pos=(-222.0, -326.5, 68.0)
+  entities by type (411): item:dandelion=44 item:kelp=38 chicken=33 cow=29 item:poppy=27 item:wheat_seeds=25 pig=25 sheep=22 skeleton=22 zombie=21 creeper=19 wolf=17 item:dirt=14 item:small_dripleaf=8 item:sugar_cane=6 item:mutton=6
+    village at -216 -312 (16 blocks)
+SHOT 28_village after 3.0s  fps=101 gt=4.8 rt=9.0 gpu=6.0 tick=4.29ms chunks=870 meshes=1885 drawn=477 tris=6896068 pending=0 entities=410 lights=6 dim=0 pos=(-237.5, -333.5, 83.0)
+    sulfur caves pocket at 88 -1392 -42
+SHOT 29_sulfur_caves after 3.1s  fps=80 gt=5.1 rt=10.5 gpu=5.3 tick=2.84ms chunks=841 meshes=1840 drawn=328 tris=5135472 pending=0 entities=227 lights=2 dim=0 pos=(87.5, -1391.5, -42.0)
+SHOT 30_lush_caves after 3.0s  fps=135 gt=2.6 rt=7.5 gpu=4.4 tick=3.26ms chunks=925 meshes=2098 drawn=457 tris=5902896 pending=0 entities=252 lights=24 dim=0 pos=(36.5, -1364.5, 29.0)
+  entities by type (251): sheep=41 pig=41 llama=32 horse=29 cow=29 frog=28 chicken=21 wolf=12 turtle=6 armadillo=3 fox=2 zombie=2 item:wheat_seeds=2 item:dandelion=1 MCFallingBlock=1 MCPlayer=1
+SHOT 31_nether after 3.0s  fps=153 gt=2.7 rt=5.1 gpu=2.4 tick=0.71ms chunks=841 meshes=1250 drawn=93 tris=5844986 pending=0 entities=8 lights=24 dim=1 pos=(7.5, -170.5, 35.0)
+SHOT 32_nether_reverse after 2.0s  fps=179 gt=1.3 rt=5.5 gpu=2.4 tick=1.01ms chunks=841 meshes=1250 drawn=36 tris=5845824 pending=0 entities=11 lights=24 dim=1 pos=(7.5, -170.5, 41.0)
+SHOT 33_end after 3.0s  fps=196 gt=3.0 rt=5.5 gpu=2.1 tick=0.31ms chunks=841 meshes=285 drawn=6 tris=353066 pending=0 entities=12 lights=0 dim=2 pos=(100.5, 0.5, 49.0)
+    dragon present
+SHOT 34_end_island after 3.0s  fps=173 gt=1.6 rt=6.5 gpu=2.3 tick=0.30ms chunks=924 meshes=330 drawn=73 tris=400624 pending=0 entities=13 lights=1 dim=2 pos=(38.5, 30.5, 96.0)
+SHOT 35_portal_return after 3.2s  fps=66 gt=6.4 rt=12.9 gpu=5.1 tick=5.13ms chunks=841 meshes=1811 drawn=268 tris=6651716 pending=0 entities=411 lights=18 dim=0 pos=(-222.0, -326.5, 68.0)
+    portal still lit after the round trip: 6/6 blocks
+SHOT 36_portal_travel after 3.0s  fps=148 gt=2.4 rt=8.8 gpu=2.9 tick=3.30ms chunks=841 meshes=1250 drawn=98 tris=5812706 pending=0 entities=13 lights=24 dim=1 pos=(-21.5, -51.5, 33.0)
+    portal travel: dim=1 (arrived in the Nether) pos=(-21.5, -51.5, 33.0), held before=grass_block x64 after=grass_block x64
+  entities by type (13): wither_skeleton=4 blaze=4 zombified_piglin=3 item:crimson_roots=1 MCPlayer=1
+done: 38 screenshots, 0 skipped, 115.5s total, average frame 8.42 ms (119 fps), worst frame 146.5 ms
+saved world 'Tour': 844 files
